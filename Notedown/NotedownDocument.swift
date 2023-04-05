@@ -9,31 +9,49 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 extension UTType {
-    static var exampleText: UTType {
-        UTType(importedAs: "com.example.plain-text")
+    static var noteBundle: UTType {
+        UTType(exportedAs: "com.byteduck.notebundle")
     }
 }
 
-struct NotedownDocument: FileDocument {
-    var text: String
+struct NotedownConfiguration: Codable {
+    let version: Int
+}
 
-    init(text: String = "Hello, world!") {
-        self.text = text
+struct NotedownDocument: FileDocument {
+    static let INFO = "info.json"
+    static let DOCUMENT = "document.md"
+    
+    var config: NotedownConfiguration
+    var documentContents: String
+
+    init(text: String = "# Hello, world!") {
+        self.documentContents = text
+        self.config = NotedownConfiguration(version: 1)
     }
 
-    static var readableContentTypes: [UTType] { [.exampleText] }
+    static var readableContentTypes: [UTType] { [.noteBundle] }
 
     init(configuration: ReadConfiguration) throws {
-        guard let data = configuration.file.regularFileContents,
-              let string = String(data: data, encoding: .utf8)
+        // First, read in the configuration and main document
+        guard let infoData = configuration.file.fileWrappers?[NotedownDocument.INFO]?.regularFileContents,
+              let info = try? JSONDecoder().decode(NotedownConfiguration.self, from: infoData),
+              let documentData = configuration.file.fileWrappers?[NotedownDocument.DOCUMENT]?.regularFileContents,
+              let contents = String(data: documentData, encoding: .utf8)
         else {
             throw CocoaError(.fileReadCorruptFile)
         }
-        text = string
+        
+        config = info
+        documentContents = contents
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let data = text.data(using: .utf8)!
-        return .init(regularFileWithContents: data)
+        let documentData = documentContents.data(using: .utf8)!
+        let configData = try JSONEncoder().encode(config)
+        return .init(directoryWithFileWrappers: [
+            NotedownDocument.DOCUMENT: FileWrapper(regularFileWithContents: documentData),
+            NotedownDocument.INFO: FileWrapper(regularFileWithContents: configData)
+        ])
     }
 }

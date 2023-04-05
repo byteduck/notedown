@@ -12,6 +12,7 @@
 		9309789429DDFE5700A77EA3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309789329DDFE5700A77EA3 /* ContentView.swift */; };
 		9309789629DDFE5700A77EA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789529DDFE5700A77EA3 /* Assets.xcassets */; };
 		9309789929DDFE5700A77EA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789829DDFE5700A77EA3 /* Preview Assets.xcassets */; };
+		93E9D4AE29DE07B900A7E9F4 /* HighlightedTextEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 93E9D4AD29DE07B900A7E9F4 /* HighlightedTextEditor */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93E9D4AE29DE07B900A7E9F4 /* HighlightedTextEditor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +92,9 @@
 			dependencies = (
 			);
 			name = Notedown;
+			packageProductDependencies = (
+				93E9D4AD29DE07B900A7E9F4 /* HighlightedTextEditor */,
+			);
 			productName = Notedown;
 			productReference = 9309788C29DDFE5700A77EA3 /* Notedown.app */;
 			productType = "com.apple.product-type.application";
@@ -118,6 +123,9 @@
 				Base,
 			);
 			mainGroup = 9309788329DDFE5700A77EA3;
+			packageReferences = (
+				93E9D4AC29DE07B900A7E9F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
+			);
 			productRefGroup = 9309788D29DDFE5700A77EA3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -344,6 +352,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		93E9D4AC29DE07B900A7E9F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kyle-n/HighlightedTextEditor";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		93E9D4AD29DE07B900A7E9F4 /* HighlightedTextEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93E9D4AC29DE07B900A7E9F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */;
+			productName = HighlightedTextEditor;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9309788429DDFE5700A77EA3 /* Project object */;
 }
