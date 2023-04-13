@@ -37,10 +37,9 @@ class NDDocument: FileDocument {
         else {
             throw CocoaError(.fileReadCorruptFile)
         }
-        
         self.config = info
         
-        // Read in the documents
+        // Then, read in the pages
         for documentFile in fileWrappers.filter({ $0.key.hasSuffix(".md") }) {
             guard
                 let documentData = documentFile.value.regularFileContents,
@@ -54,6 +53,8 @@ class NDDocument: FileDocument {
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         var fileWrappers = configuration.existingFile?.fileWrappers ?? [:]
+        
+        print(Unmanaged.passUnretained(self).toOpaque())
         
         // Write config
         fileWrappers[NDDocument.INFO] = FileWrapper(regularFileWithContents: try JSONEncoder().encode(config))
@@ -70,7 +71,9 @@ class NDDocument: FileDocument {
 
 extension NDDocument {
     struct Config: Codable {
-        let version: Int
+        var version: Int
+        /// The filename of the page open when the document was saved.
+        var openPage: String?
     }
 }
 

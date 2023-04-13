@@ -11,7 +11,11 @@ import SwiftUI
 struct NDApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: NDDocument()) { file in
-            NDEditorView(document: file.$document, configuration: .constant(NDMarkdownEditorConfiguration()))
+            NDEditorView(
+                document: file.$document,
+                configuration: .constant(NDMarkdownEditorConfiguration()),
+                selectedPage: file.document.pages.first(where: { $0.fileName == file.document.config.openPage })
+            )
         }
     }
 }

@@ -22,6 +22,9 @@ struct NDEditorView: View {
                     Text(page.wrappedValue.title)
                 }
             }
+            .onChange(of: selectedPage) { selectedPage in
+                document.config.openPage = selectedPage?.fileName
+            }
             
             Button("+", action: {
                 newPageName = ""
