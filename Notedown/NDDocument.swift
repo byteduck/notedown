@@ -14,29 +14,29 @@ extension UTType {
     }
 }
 
-struct NotedownConfiguration: Codable {
+struct NDConfig: Codable {
     let version: Int
 }
 
-struct NotedownDocument: FileDocument {
+struct NDDocument: FileDocument {
     static let INFO = "info.json"
     static let DOCUMENT = "document.md"
     
-    var config: NotedownConfiguration
+    var config: NDConfig
     var documentContents: String
 
     init(text: String = "# Hello, world!") {
         self.documentContents = text
-        self.config = NotedownConfiguration(version: 1)
+        self.config = NDConfig(version: 1)
     }
 
     static var readableContentTypes: [UTType] { [.noteBundle] }
 
     init(configuration: ReadConfiguration) throws {
         // First, read in the configuration and main document
-        guard let infoData = configuration.file.fileWrappers?[NotedownDocument.INFO]?.regularFileContents,
-              let info = try? JSONDecoder().decode(NotedownConfiguration.self, from: infoData),
-              let documentData = configuration.file.fileWrappers?[NotedownDocument.DOCUMENT]?.regularFileContents,
+        guard let infoData = configuration.file.fileWrappers?[NDDocument.INFO]?.regularFileContents,
+              let info = try? JSONDecoder().decode(NDConfig.self, from: infoData),
+              let documentData = configuration.file.fileWrappers?[NDDocument.DOCUMENT]?.regularFileContents,
               let contents = String(data: documentData, encoding: .utf8)
         else {
             throw CocoaError(.fileReadCorruptFile)
@@ -50,8 +50,8 @@ struct NotedownDocument: FileDocument {
         let documentData = documentContents.data(using: .utf8)!
         let configData = try JSONEncoder().encode(config)
         return .init(directoryWithFileWrappers: [
-            NotedownDocument.DOCUMENT: FileWrapper(regularFileWithContents: documentData),
-            NotedownDocument.INFO: FileWrapper(regularFileWithContents: configData)
+            NDDocument.DOCUMENT: FileWrapper(regularFileWithContents: documentData),
+            NDDocument.INFO: FileWrapper(regularFileWithContents: configData)
         ])
     }
 }
