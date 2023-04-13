@@ -23,6 +23,7 @@ class NDDocument: FileDocument {
     init(text: String = "# Hello, world!") {
         self.config = Config(version: 1)
         self.pages = [Page(document: self, contents: text, fileName: "Hello world.md")]
+        self.pages[0].dirty = true
     }
 
     static var readableContentTypes: [UTType] { [.noteBundle] }
@@ -47,16 +48,15 @@ class NDDocument: FileDocument {
             else {
                 continue
             }
-            pages.append(Page(document: self, contents: documentText, fileName: documentFile.key))
+            pages.append(Page(document: self, contents: documentText, fileName: documentFile.key, dirty: false))
         }
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        var fileWrappers = configuration.existingFile?.fileWrappers ?? [:]
+        
         // Write config
-        let configData = try JSONEncoder().encode(config)
-        var fileWrappers = [
-            NDDocument.INFO: FileWrapper(regularFileWithContents: configData)
-        ]
+        fileWrappers[NDDocument.INFO] = FileWrapper(regularFileWithContents: try JSONEncoder().encode(config))
         
         // Write dirty markdown files
         pages.filter({ $0.dirty }).forEach({ page in
@@ -75,19 +75,39 @@ extension NDDocument {
 }
 
 extension NDDocument {
-    struct Page {
+    class Page: Identifiable, Hashable {
         weak var document: NDDocument?
         var contents: String
         let fileName: String
         var title: String {
             get {
-                let firstLine = contents[contents.lineRange(for: contents.startIndex...contents.startIndex)]
-                if let headerRange = firstLine.firstMatch(of: NDSyntaxRegex.header)?.range {
-                    return String(firstLine[headerRange.upperBound...firstLine.endIndex])
+                let firstLine = contents[contents.lineRange(for: contents.startIndex..<contents.startIndex)]
+                if let headerRange = firstLine.firstMatch(of: NDSyntaxRegex.header)?[1].range {
+                    return String(firstLine[headerRange.upperBound..<firstLine.endIndex])
                 }
                 return String(firstLine)
             }
         }
-        var dirty = false
+        @Published var dirty = false
+        
+        init(document: NDDocument, contents: String, fileName: String, dirty: Bool = true) {
+            self.document = document
+            self.contents = contents
+            self.fileName = fileName
+        }
+        
+        // Identifiable, Equatable, Hashable
+        
+        var id: String {
+            get { fileName }
+        }
+        
+        static func ==(lhs: NDDocument.Page, rhs: NDDocument.Page) -> Bool {
+            return lhs.id == rhs.id
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
     }
 }

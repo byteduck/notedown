@@ -10,8 +10,8 @@ import AppKit
 import SwiftUI
 
 struct NDMarkdownEditorView: NSViewRepresentable {
-    @Binding var page: NDDocument.Page
-    @Binding var configuration: NDMarkdownEditorConfiguration
+    var page: NDDocument.Page
+    var configuration: NDMarkdownEditorConfiguration
     
     let scrollView = NSTextView.scrollableTextView()
     
@@ -60,6 +60,7 @@ extension NDMarkdownEditorView {
             
             // Mark Dirty
             self.parent.page.dirty = true
+            self.parent.page.contents = textView.string
             
             // Apply highlighting
             let string = textStorage.string

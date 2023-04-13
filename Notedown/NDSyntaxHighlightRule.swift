@@ -19,7 +19,7 @@ struct NDSyntaxRegex {
     static let unorderedList = try! Regex("^\\s*(\\-|\\*|\\+)\\s").anchorsMatchLineEndings(true)
     static let orderedList = try! Regex("^\\s*(\\d*)\\.\\s").anchorsMatchLineEndings(true)
     static let latex = try! Regex("\\$(?:[^\\\\\\$\\n]|\\\\.)*\\$").repetitionBehavior(.reluctant)
-    static let header = try! Regex("^#{1,\(maxHeadingLevel)}\\s.*$").anchorsMatchLineEndings(true)
+    static let header = try! Regex("^(#{1,\(maxHeadingLevel)}\\s).*$").anchorsMatchLineEndings(true)
     static let whitespace = try! Regex("\\s*")
     static let maxHeadingLevel = 6
 }
