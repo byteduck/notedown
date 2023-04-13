@@ -11,9 +11,7 @@
 		9309789229DDFE5700A77EA3 /* NDDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309789129DDFE5700A77EA3 /* NDDocument.swift */; };
 		9309789429DDFE5700A77EA3 /* NDEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309789329DDFE5700A77EA3 /* NDEditorView.swift */; };
 		931CD4CE29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931CD4CD29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift */; };
-		931CD4D029E728A000ED6C11 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931CD4CF29E728A000ED6C11 /* String+Extension.swift */; };
-		933B10AE29E4852900384996 /* NDSyntaxHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933B10AD29E4852900384996 /* NDSyntaxHighlight.swift */; };
-		933B10B029E485C900384996 /* NDMarkdownEditor+Syntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933B10AF29E485C900384996 /* NDMarkdownEditor+Syntax.swift */; };
+		933B10B029E485C900384996 /* NDSyntaxHighlightRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933B10AF29E485C900384996 /* NDSyntaxHighlightRule.swift */; };
 		935FA5B729E0EA8600027EAF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789829DDFE5700A77EA3 /* Preview Assets.xcassets */; };
 		935FA5B829E0EA8800027EAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789529DDFE5700A77EA3 /* Assets.xcassets */; };
 		93E9D4B029DE878900A7E9F4 /* NDMarkdownEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E9D4AF29DE878900A7E9F4 /* NDMarkdownEditor.swift */; };
@@ -29,9 +27,7 @@
 		9309789A29DDFE5700A77EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9309789B29DDFE5700A77EA3 /* Notedown.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notedown.entitlements; sourceTree = "<group>"; };
 		931CD4CD29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDMarkdownEditorConfiguration.swift; sourceTree = "<group>"; };
-		931CD4CF29E728A000ED6C11 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		933B10AD29E4852900384996 /* NDSyntaxHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSyntaxHighlight.swift; sourceTree = "<group>"; };
-		933B10AF29E485C900384996 /* NDMarkdownEditor+Syntax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NDMarkdownEditor+Syntax.swift"; sourceTree = "<group>"; };
+		933B10AF29E485C900384996 /* NDSyntaxHighlightRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSyntaxHighlightRule.swift; sourceTree = "<group>"; };
 		93E9D4AF29DE878900A7E9F4 /* NDMarkdownEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDMarkdownEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,7 +61,6 @@
 		9309788E29DDFE5700A77EA3 /* Notedown */ = {
 			isa = PBXGroup;
 			children = (
-				933B10AD29E4852900384996 /* NDSyntaxHighlight.swift */,
 				9309788F29DDFE5700A77EA3 /* NDApp.swift */,
 				9309789129DDFE5700A77EA3 /* NDDocument.swift */,
 				9309789329DDFE5700A77EA3 /* NDEditorView.swift */,
@@ -75,8 +70,7 @@
 				9309789729DDFE5700A77EA3 /* Preview Content */,
 				93E9D4AF29DE878900A7E9F4 /* NDMarkdownEditor.swift */,
 				931CD4CD29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift */,
-				933B10AF29E485C900384996 /* NDMarkdownEditor+Syntax.swift */,
-				931CD4CF29E728A000ED6C11 /* String+Extension.swift */,
+				933B10AF29E485C900384996 /* NDSyntaxHighlightRule.swift */,
 			);
 			path = Notedown;
 			sourceTree = "<group>";
@@ -163,12 +157,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				931CD4D029E728A000ED6C11 /* String+Extension.swift in Sources */,
 				931CD4CE29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift in Sources */,
-				933B10B029E485C900384996 /* NDMarkdownEditor+Syntax.swift in Sources */,
+				933B10B029E485C900384996 /* NDSyntaxHighlightRule.swift in Sources */,
 				9309789229DDFE5700A77EA3 /* NDDocument.swift in Sources */,
 				93E9D4B029DE878900A7E9F4 /* NDMarkdownEditor.swift in Sources */,
-				933B10AE29E4852900384996 /* NDSyntaxHighlight.swift in Sources */,
 				9309789029DDFE5700A77EA3 /* NDApp.swift in Sources */,
 				9309789429DDFE5700A77EA3 /* NDEditorView.swift in Sources */,
 			);

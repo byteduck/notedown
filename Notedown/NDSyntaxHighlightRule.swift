@@ -7,11 +7,19 @@
 
 import AppKit
 
+struct NDSyntaxHighlightRule {
+    /// The `Regex` to match for this syntax highlighting rule.
+    let regex: Regex<AnyRegexOutput>
+    /// An array of `NSAttributedString` style dictionaries corresponding to capture groups in the regular expression
+    let styles: [[NSAttributedString.Key : Any]?]
+}
+
 struct NDSyntaxRegex {
     static let link = try! Regex("!?\\[([^\\[\\]]*)\\]\\((.*?)\\)")
     static let unorderedList = try! Regex("^\\s*(\\-|\\*|\\+)\\s").anchorsMatchLineEndings(true)
     static let orderedList = try! Regex("^\\s*(\\d*)\\.\\s").anchorsMatchLineEndings(true)
     static let latex = try! Regex("\\$(?:[^\\\\\\$\\n]|\\\\.)*\\$").repetitionBehavior(.reluctant)
+    static let header = try! Regex("^#{1,\(maxHeadingLevel)}\\s.*$").anchorsMatchLineEndings(true)
     static let whitespace = try! Regex("\\s*")
     static let maxHeadingLevel = 6
 }

@@ -12,7 +12,7 @@ struct NDEditorView: View {
     @Binding var configuration: NDMarkdownEditorConfiguration
 
     var body: some View {
-        NDMarkdownEditorView(text: $document.documentContents, configuration: $configuration)
+        NDMarkdownEditorView(page: $document.pages[0], configuration: $configuration)
     }
 }
 

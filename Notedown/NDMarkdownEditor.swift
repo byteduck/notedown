@@ -10,7 +10,7 @@ import AppKit
 import SwiftUI
 
 struct NDMarkdownEditorView: NSViewRepresentable {
-    @Binding var text: String
+    @Binding var page: NDDocument.Page
     @Binding var configuration: NDMarkdownEditorConfiguration
     
     let scrollView = NSTextView.scrollableTextView()
@@ -18,7 +18,7 @@ struct NDMarkdownEditorView: NSViewRepresentable {
     func makeNSView(context: Context) -> some NSView {
         let textView = scrollView.documentView as! NSTextView
         textView.delegate = context.coordinator
-        textView.string = text
+        textView.string = page.contents
         textView.allowsUndo = true
         
         updateConfiguration(context: context)
@@ -58,8 +58,8 @@ extension NDMarkdownEditorView {
                 return
             }
             
-            // Update text for SwiftUI
-            self.parent.text = textView.string
+            // Mark Dirty
+            self.parent.page.dirty = true
             
             // Apply highlighting
             let string = textStorage.string
