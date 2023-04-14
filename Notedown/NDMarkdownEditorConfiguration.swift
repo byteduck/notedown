@@ -8,6 +8,6 @@
 import AppKit
 
 struct NDMarkdownEditorConfiguration {
-    var defaultFont: NSFont = .monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)
+    var defaultFont: NSFont = .systemFont(ofSize: NSFont.systemFontSize, weight: .regular)
     var defaultColor: NSColor = .textColor
 }

@@ -10,7 +10,7 @@ import AppKit
 import SwiftUI
 
 struct NDMarkdownEditorView: NSViewRepresentable {
-    var page: NDDocument.Page
+    @Binding var page: NDDocument.Page
     var configuration: NDMarkdownEditorConfiguration
     
     let scrollView = NSTextView.scrollableTextView()

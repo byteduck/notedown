@@ -18,11 +18,20 @@ struct NDSyntaxRegex {
     static let link = try! Regex("!?\\[([^\\[\\]]*)\\]\\((.*?)\\)")
     static let unorderedList = try! Regex("^\\s*(\\-|\\*|\\+)\\s").anchorsMatchLineEndings(true)
     static let orderedList = try! Regex("^\\s*(\\d*)\\.\\s").anchorsMatchLineEndings(true)
-    static let latex = try! Regex("\\$(?:[^\\\\\\$\\n]|\\\\.)*\\$").repetitionBehavior(.reluctant)
+    static let latex = try! Regex("(\\$)((?:[^\\\\\\$\\n]|\\\\.){1,})(\\$)").repetitionBehavior(.reluctant)
     static let header = try! Regex("^(#{1,\(maxHeadingLevel)}\\s).*$").anchorsMatchLineEndings(true)
+    static let bold = try! Regex("(\\*\\*)((?:[^\\*\\n]){1,})(\\*\\*)").repetitionBehavior(.reluctant)
+    static let italic = try! Regex("(\\*)((?:[^\\*\\n]){1,})(\\*)").repetitionBehavior(.reluctant)
+    static let codeBlock = try! Regex("(```)((?:[^`]|\\n.){1,})(```)").repetitionBehavior(.reluctant)
     static let whitespace = try! Regex("\\s*")
     static let maxHeadingLevel = 6
 }
+
+let italicFont = {
+    let font = NSFont.monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)
+    NSFontManager.shared.convert(font, toHaveTrait: .italicFontMask)
+    return font
+}()
 
 let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
     var rules: [NDSyntaxHighlightRule] = [
@@ -48,17 +57,56 @@ let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
         /// LaTeX
         NDSyntaxHighlightRule(
             regex: NDSyntaxRegex.latex,
-            styles: [[.foregroundColor: NSColor.systemGreen]]
+            styles: [
+                [:],
+                [.font: NSFont.monospacedSystemFont(ofSize: 0.001, weight: .regular)],
+                [
+                    .font: NSFont(name: "Times New Roman", size: NSFont.systemFontSize)!,
+                    .foregroundColor: NSColor.systemGreen
+                ],
+                [.font: NSFont.monospacedSystemFont(ofSize: 0.001, weight: .regular)]
+            ]
+        ),
+        /// Bold
+        NDSyntaxHighlightRule(
+            regex: NDSyntaxRegex.bold,
+            styles: [
+                [:],
+                [.font: NSFont.monospacedSystemFont(ofSize: 0.001, weight: .bold)],
+                [.font: NSFont.monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .bold)],
+                [.font: NSFont.monospacedSystemFont(ofSize: 0.001, weight: .bold)]
+            ]
+        ),
+        /// Code block
+        NDSyntaxHighlightRule(
+            regex: NDSyntaxRegex.codeBlock,
+            styles: [
+                [:],
+                [:],
+                [.font: NSFont.monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)],
+                [:]
+            ]
         )
+        /// Italic
+//        NDSyntaxHighlightRule(
+//            regex: NDSyntaxRegex.italic,
+//            styles: [
+//                [:],
+//                [.font: NSFont.monospacedSystemFont(ofSize: 0.001, weight: .regular)],
+//                [.font: italicFont],
+//                [.font: NSFont.monospacedSystemFont(ofSize: 0.001, weight: .regular)]
+//            ]
+//        ),
     ]
     
     // Editor rules for markdown headers
     for level in 1...NDSyntaxRegex.maxHeadingLevel {
+        let fontSize = NSFont.systemFontSize + pow(1.6, Double(NDSyntaxRegex.maxHeadingLevel - level))
         rules.append(NDSyntaxHighlightRule(
             regex: try! Regex("^#{\(level)}\\s.*$").anchorsMatchLineEndings(true),
             styles: [[
-                .foregroundColor: NSColor.systemBlue,
-                .font: NSFont.monospacedSystemFont(ofSize: NSFont.systemFontSize + CGFloat((2 * NDSyntaxRegex.maxHeadingLevel - 2 * level)), weight: .bold)
+                .foregroundColor: level == 1 ? NSColor.systemBlue : NSColor.systemCyan,
+                .font: NSFont.monospacedSystemFont(ofSize: fontSize, weight: level == 1 ? .bold : .semibold)
             ]]
         ))
     }
