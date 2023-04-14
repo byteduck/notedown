@@ -2,7 +2,7 @@
 
 A (very work-in-progress) SwiftUI and Cocoa-based Markdown editor for notes. It aims to provide a hybrid experience that brings together the speed of raw Markdown and LaTeX editing with the comforts of WYSIWYG editors.
 
-[Notedown Screenshot](screenshots/2023-04-14.png)
+![Notedown Screenshot](screenshots/2023-04-14.png)
 
 The goal of Notedown is to create a simple, unified note-taking application that allows for easy formatting and reading using Markdown and LaTeX. It was born out of my frustration with other note-taking applications like OneNote and how obtuse and slow their interfaces can be - sometimes, plain old markdown and LaTeX are all you need.
 
