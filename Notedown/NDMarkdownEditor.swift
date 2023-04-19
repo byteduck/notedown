@@ -95,18 +95,19 @@ extension NDMarkdownEditorView {
             let string = textStorage.attributedSubstring(from: paragraphRange).string
             
             markdownSyntaxRules.forEach({ rule in
+                // TODO: Cache rule attributes so we don't have to calculate them on the fly every time
+                let ruleAttributes = rule.attributes(parent.configuration)
                 string.matches(of: rule.regex).forEach({ match in
                     for rangeIndex in match.indices {
                         guard
                             rangeIndex < rule.styles.count,
-                            let style = rule.styles[rangeIndex],
                             let range = match[rangeIndex].range
                         else {
                             continue
                         }
                         
                         let nsRange = NSRange(range, in: string)
-                        textStorage.addAttributes(style, range: NSRange(location: nsRange.lowerBound + paragraphRange.lowerBound, length: nsRange.length))
+                        textStorage.addAttributes(ruleAttributes[rangeIndex], range: NSRange(location: nsRange.lowerBound + paragraphRange.lowerBound, length: nsRange.length))
                     }
                 })
             })

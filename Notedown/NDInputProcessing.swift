@@ -19,7 +19,7 @@ let markdownProcessors: [NDInputProcessor] = [
 let processUnorderedList: NDInputProcessor = { textView, replacementRange, replacementString, lineRange, lineString in
     guard
         replacementString == "\n",
-        let listMatch = lineString.firstMatch(of: NDSyntaxRegex.unorderedList),
+        let listMatch = lineString.firstMatch(of: Regex(NDSyntaxRegex.unorderedList)),
         let bulletRange = listMatch[1].range
     else { return true }
         
@@ -52,7 +52,7 @@ let processUnorderedList: NDInputProcessor = { textView, replacementRange, repla
 let processOrderedList: NDInputProcessor = { textView, replacementRange, replacementString, lineRange, lineString in
     guard
         replacementString == "\n",
-        let listMatch = lineString.firstMatch(of: NDSyntaxRegex.orderedList),
+        let listMatch = lineString.firstMatch(of: Regex(NDSyntaxRegex.orderedList)),
         let numberRange = listMatch[1].range,
         let number = Int(lineString[numberRange])
     else { return true }
