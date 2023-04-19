@@ -83,11 +83,17 @@ extension NDMarkdownEditorView {
         }
         
         func applyHighlighting(inRange range: NSRange, withStorage textStorage: NSTextStorage) {
+            if range.length == 0 {
+                return
+            }
+            
+            let paragraphRange = textStorage.mutableString.paragraphRange(for: range)
             textStorage.setAttributes([
                 .font: parent.configuration.defaultFont,
                 .foregroundColor: parent.configuration.defaultColor
-            ], range: range)
-            let string = textStorage.string
+            ], range: paragraphRange)
+            let string = textStorage.attributedSubstring(from: paragraphRange).string
+            
             markdownSyntaxRules.forEach({ rule in
                 string.matches(of: rule.regex).forEach({ match in
                     for rangeIndex in match.indices {
@@ -99,7 +105,8 @@ extension NDMarkdownEditorView {
                             continue
                         }
                         
-                        textStorage.addAttributes(style, range: NSRange(range, in: string))
+                        let nsRange = NSRange(range, in: string)
+                        textStorage.addAttributes(style, range: NSRange(location: nsRange.lowerBound + paragraphRange.lowerBound, length: nsRange.length))
                     }
                 })
             })
@@ -107,44 +114,19 @@ extension NDMarkdownEditorView {
         
         func performSyntaxCompletion(textView: NSTextView, inRange range: NSRange, replacementString: String?) -> Bool {
             let viewString = textView.string
-            guard let replacementString = replacementString, let stringRange = Range(range, in: viewString) else {
-                return true
-            }
+            
+            guard
+                let replacementString = replacementString,
+                let stringRange = Range(range, in: viewString)
+            else { return true }
+            
             let lineRange = viewString.lineRange(for: stringRange)
             let lineString = viewString[lineRange]
             
-            // Unordered list completion
-            if
-                replacementString == "\n",
-                let listMatch = lineString.firstMatch(of: NDSyntaxRegex.unorderedList),
-                let bulletRange = listMatch[1].range
-            {
-                let bullet = lineString[bulletRange]
-                var indentation = ""
-                if let indentationRange = lineString.firstMatch(of: NDSyntaxRegex.whitespace)?.range {
-                    indentation = String(lineString[indentationRange])
+            for processor in markdownProcessors {
+                if !processor(textView, range, replacementString, lineRange, lineString) {
+                    return false
                 }
-                textView.replaceCharacters(in: range, with: "\(indentation)\(bullet) ")
-            }
-            
-            // Ordered list completion
-            if
-                replacementString == "\n",
-                let listMatch = lineString.firstMatch(of: NDSyntaxRegex.orderedList),
-                let numberRange = listMatch[1].range,
-                let number = Int(lineString[numberRange])
-            {
-                var indentation = ""
-                if let indentationRange = lineString.firstMatch(of: NDSyntaxRegex.whitespace)?.range {
-                    indentation = String(lineString[indentationRange])
-                }
-                textView.replaceCharacters(in: range, with: "\(indentation)\(number + 1). ")
-            }
-            
-            // List indentation
-            if replacementString == "\t" && (lineString.starts(with: NDSyntaxRegex.orderedList) || lineString.starts(with: NDSyntaxRegex.unorderedList)) {
-                textView.replaceCharacters(in: NSRange(lineRange.lowerBound..<lineRange.lowerBound, in: viewString), with: "\t")
-                return false
             }
             
             return true
