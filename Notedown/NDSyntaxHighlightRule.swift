@@ -73,7 +73,10 @@ let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
             styles: [
                 [:],
                 [.font: NSFont.monospacedSystemFont(ofSize: 0.001, weight: .bold)],
-                [.font: NSFont.monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .bold)],
+                [
+                    .font: NSFont.monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .bold),
+                    .foregroundColor: NSColor.systemRed
+                ],
                 [.font: NSFont.monospacedSystemFont(ofSize: 0.001, weight: .bold)]
             ]
         ),
