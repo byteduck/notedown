@@ -17,5 +17,10 @@ struct NDApp: App {
                 selectedPage: file.$document.notebook.config.openPage
             )
         }
+        .commands {
+            CommandGroup(before: .textEditing) {
+                Button("TEST") {}
+            }
+        }
     }
 }

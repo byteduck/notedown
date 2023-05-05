@@ -47,6 +47,14 @@ class NDDocument: ReferenceFileDocument {
             }
             notebook.pages.append(Page(contents: documentText, fileName: documentFile.key, dirty: false))
         }
+        
+        // Finally, read in the images
+        for imageFile in fileWrappers.filter({ !$0.key.hasSuffix(".md") && !$0.key.hasSuffix(".json") }) {
+            guard let imageData = imageFile.value.regularFileContents else {
+                continue
+            }
+            notebook.images.append(NDImage(fileName: imageFile.key, data: imageData))
+        }
     }
     
     typealias Snapshot = Notebook
@@ -57,9 +65,11 @@ class NDDocument: ReferenceFileDocument {
     func fileWrapper(snapshot: Notebook, configuration: WriteConfiguration) throws -> FileWrapper {
         var fileWrappers = configuration.existingFile?.fileWrappers ?? [:]
         
-        // Remove deleted pages from fileWrappers
+        // Remove deleted pages and images from fileWrappers
         fileWrappers = fileWrappers.filter({ wrapper in
-            !wrapper.key.hasSuffix(".md") || notebook.pages.contains(where: { $0.fileName == wrapper.key })
+            notebook.pages.contains(where: { $0.fileName == wrapper.key }) ||
+            notebook.images.contains(where: { $0.fileName == wrapper.key }) ||
+            wrapper.key == NDDocument.INFO
         })
         
         // Write config
@@ -74,6 +84,14 @@ class NDDocument: ReferenceFileDocument {
             fileWrappers[notebook.pages[i].fileName] = FileWrapper(regularFileWithContents: documentData)
         }
         
+        // Write dirty images
+        for i in notebook.images.indices {
+            DispatchQueue.main.async {
+                self.notebook.images[i].dirty = false
+            }
+            fileWrappers[notebook.images[i].fileName] = FileWrapper(regularFileWithContents: notebook.images[i].data)
+        }
+        
         return .init(directoryWithFileWrappers: fileWrappers)
     }
 }
@@ -82,19 +100,29 @@ extension NDDocument {
     struct Notebook {
         var config: Config
         var pages: [Page] = []
+        var images: [NDImage] = []
     }
-}
 
-extension NDDocument {
     struct Config: Codable {
         /// The spec version of the config file.
         var version: Int
         /// The filename of the page open when the document was saved.
         var openPage: String?
     }
-}
 
-extension NDDocument {
+    struct NDImage {
+        let fileName: String
+        let image: NSImage
+        let data: Data
+        var dirty: Bool = false
+        
+        init(fileName: String, data: Data) {
+            self.fileName = fileName
+            self.image = NSImage(data: data) ?? NSImage()
+            self.data = data
+        }
+    }
+    
     struct Page: Identifiable, Hashable {
         var contents: String
         let fileName: String

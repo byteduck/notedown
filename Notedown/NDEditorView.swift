@@ -24,6 +24,7 @@ struct NDEditorView: View {
     @Environment(\.undoManager) var undoManager
 
     var body: some View {
+        
         NavigationSplitView {
             // List of pages
             List($document.notebook.pages, selection: $selectedPage) { page in
@@ -55,8 +56,9 @@ struct NDEditorView: View {
                 let pageName = Binding<String>($selectedPage)?.wrappedValue,
                 let page = $document.notebook.pages.first(where: { $0.wrappedValue.fileName == pageName })
             {
-                NDMarkdownEditorView(page: page, configuration: configuration)
+                NDMarkdownEditorView(page: page, document: document, configuration: configuration)
                     .id(selectedPage)
+                    .edgesIgnoringSafeArea(.top)
             } else {
                 Text("Select a page")
             }

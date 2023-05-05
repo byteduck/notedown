@@ -20,18 +20,25 @@ enum NDSyntaxFormat {
     case italic
     case underlineStyle(NSUnderlineStyle)
     case size(CGFloat)
+    case background(NSColor)
+    case paragraphStyle(NSParagraphStyle)
 }
 
 struct NDSyntaxHighlightRule {
+    typealias SyntaxHighlightAction = (NDDocument, NSTextStorage, NSRange, String, Regex<AnyRegexOutput>.Match) -> Void
+    
     /// The `Regex` to match for this syntax highlighting rule.
     let regex: Regex<AnyRegexOutput>
     /// An array of `NSAttributedString` style dictionaries corresponding to capture groups in the regular expression
     let styles: [[NDSyntaxFormat]]
+    /// An optional special action to perform when evaluating the rule
+    let action: SyntaxHighlightAction?
     
     // This initializer simply serves to type-erase the output parameter of the regex
-    init<Output>(regex: Regex<Output>, styles: [[NDSyntaxFormat]]) {
+    init<Output>(regex: Regex<Output>, styles: [[NDSyntaxFormat]], action: SyntaxHighlightAction? = nil) {
         self.regex = Regex(regex)
         self.styles = styles
+        self.action = action
     }
     
     /// Creates an NSAttributedString attribute dictionary using the styles and given configuration.
@@ -47,6 +54,8 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
         switch(style) {
         case .color(let color):
             self[.foregroundColor] = color
+        case .background(let color):
+            self[.backgroundColor] = color
         case .size(let size):
             self[.font] = font(config).withSize(size)
         case .weight(let weight):
@@ -77,6 +86,8 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
                 break
             }
             self[.font] = NSFontManager.shared.font(withFamily: newFontFamily, traits: oldTraits, weight: oldWeight, size: oldFont.pointSize)
+        case .paragraphStyle(let paragraphStyle):
+            self[.paragraphStyle] = paragraphStyle
         }
     }
     
@@ -99,22 +110,34 @@ extension NSFont.Weight {
 
 struct NDSyntaxRegex {
     static let link = /!?\[([^\[\]]*)\]\((.*?)\)/
-    static let unorderedList = /^\s*(\-|\*|\+)\s/.anchorsMatchLineEndings(true)
+    static let unorderedList = /(^\s*(\-|\*|\+)\s)([^\n]*)/.anchorsMatchLineEndings(true)
     static let orderedList = /^\s*(\d*)\.\s/.anchorsMatchLineEndings(true)
     static let latex = /(\$)((?:[^\\\$\n]|\\.){1,})(\$)/.repetitionBehavior(.reluctant)
-    static let header = try! Regex("^(#{1,\(maxHeadingLevel)}\\s).*$").anchorsMatchLineEndings(true)
+    static let header = try! Regex("^(#{1,\(maxHeadingLevel)}\\s*).{1,}$").anchorsMatchLineEndings(true)
     static let bold = /(\*\*)((?:[^\*\n]){1,})(\*\*)/.repetitionBehavior(.reluctant)
     static let italic = /(\*)((?:[^\*\n]){1,})(\*)/.repetitionBehavior(.reluctant)
     static let codeBlock = /(```)((?:[^`]|\n.){1,})(```)/.repetitionBehavior(.reluctant)
     static let whitespace = /\s*/
-    static let htmlTag = /<[a-zA-Z]+(\s+[a-zA-Z]+\s*=\s*("([^"]*)"|'([^'])'))*\s*\/>/
+    static let htmlTag = /<([a-zA-Z]+)(\s+[a-zA-Z]+\s*=\s*("([^"]*)"|'([^'])'))*\s*\/>/
+    static let inlineCode = /(\`)((?:[^\\\`\n]|\\.){1,})(\`)/.repetitionBehavior(.reluctant)
     static let maxHeadingLevel = 6
+    static let headingColors: [NSColor] = [.systemBlue, .systemCyan, .textColor, .textColor, .textColor, .textColor]
+    static let headingWeights: [NSFont.Weight] = [.heavy, .bold, .semibold, .semibold, .semibold, .semibold]
+    static let headingUnderlines: [NSUnderlineStyle] = [[], [], .single, .single, .single, .single]
 }
 
-let italicFont = {
-    let font = NSFont.monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)
-    NSFontManager.shared.convert(font, toHaveTrait: .italicFontMask)
-    return font
+let headingParagraphStyle = {
+    let style = NSMutableParagraphStyle()
+    style.paragraphSpacing = 5.0
+    style.paragraphSpacingBefore = 10.0
+    return style
+}()
+
+let codeBlockTicksParagraphStyle = {
+    let style = NSMutableParagraphStyle()
+    style.paragraphSpacingBefore = 5.0
+    style.paragraphSpacing = 5.0
+    return style
 }()
 
 let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
@@ -131,7 +154,21 @@ let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
         /// Bulleted lists
         NDSyntaxHighlightRule(
             regex: NDSyntaxRegex.unorderedList,
-            styles: [[.color(.secondaryLabelColor)]]
+            styles: [
+                [],
+                [],
+                [.color(.secondaryLabelColor), .weight(.heavy)],
+                []
+            ],
+            action: { document, storage, paragraphRange, paragraphString, match in
+                // Set paragraph indent to match up with bullet indentation and whitespace
+                let storageString = storage.string
+                let bulletString = storage.attributedSubstring(from: match[1].range!.relativeTo(paragraphRange, in: paragraphString))
+                let style = NSMutableParagraphStyle()
+                style.headIndent = bulletString.size().width
+                style.paragraphSpacing = 2.0
+                storage.addAttributes([.paragraphStyle: style], range: match.range.relativeTo(paragraphRange, in: paragraphString))
+            }
         ),
         /// Numbered lists
         NDSyntaxHighlightRule(
@@ -146,7 +183,22 @@ let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
                 [.size(0.001)],
                 [.font(.serif), .color(.systemGreen)],
                 [.size(0.001)]
-            ]
+            ],
+            action: { document, storage, paragraphRange, paragraphString, match in
+                guard let latex = match[2].substring else {
+                    return
+                }
+                
+//                let eyeAttachment = NSTextAttachment()
+//                eyeAttachment.image = NSImage(systemSymbolName: "eye.fill", accessibilityDescription: nil)
+//                let eyeString = NSMutableAttributedString(attachment: eyeAttachment)
+//                eyeString.addAttribute(.link, value: NDTextLink.latex(String(latex)), range: NSRange(location: 0, length: eyeString.length))
+//
+//                storage.insert(eyeString, at: match.range.relativeTo(paragraphRange, in: paragraphString).upperBound + 1)
+                storage.addAttributes([
+                    .link: NDTextLink.latex(String(latex))
+                ], range: match[2].range!.relativeTo(paragraphRange, in: paragraphString))
+            }
         ),
         /// Bold
         NDSyntaxHighlightRule(
@@ -158,14 +210,24 @@ let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
                 [.size(0.001)]
             ]
         ),
+        /// Inline code
+        NDSyntaxHighlightRule(
+            regex: NDSyntaxRegex.inlineCode,
+            styles: [
+                [.font(.monospace), .background(.systemRed.withAlphaComponent(0.1)), .color(.systemRed)],
+                [.size(0.001)],
+                [],
+                [.size(0.001)]
+            ]
+        ),
         /// Code block
         NDSyntaxHighlightRule(
             regex: NDSyntaxRegex.codeBlock,
             styles: [
                 [],
-                [],
+                [.size(0.001), .paragraphStyle(codeBlockTicksParagraphStyle)],
                 [.font(.monospace)],
-                []
+                [.size(0.001), .paragraphStyle(codeBlockTicksParagraphStyle)]
             ]
         ),
         /// HTML tag
@@ -175,7 +237,22 @@ let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
                 [.font(.monospace), .color(.systemTeal)],
                 [.color(.systemMint)],
                 [.color(.systemRed)]
-            ]
+            ],
+            action: { document, storage, paragraphRange, paragraphString, match in
+                guard
+                    let tagName = match[1].substring,
+                    tagName.uppercased() == "IMG",
+                    let imageName = match[4].substring
+                else {
+                    return
+                }
+                
+                let imageRange = match[3].range!.relativeTo(paragraphRange, in: paragraphString)
+                storage.addAttributes([
+                    .link: NDTextLink.image(String(imageName)),
+                    .foregroundColor: NSColor.systemRed
+                ], range: imageRange)
+            }
         )
         /// Italic
 //        NDSyntaxHighlightRule(
@@ -191,14 +268,22 @@ let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
     
     // Editor rules for markdown headers
     for level in 1...NDSyntaxRegex.maxHeadingLevel {
-        let fontSize = NSFont.systemFontSize + pow(1.6, Double(NDSyntaxRegex.maxHeadingLevel - level))
+        let fontSize = NSFont.systemFontSize + pow(1.8, Double(NDSyntaxRegex.maxHeadingLevel - level))
         rules.append(NDSyntaxHighlightRule(
-            regex: try! Regex("^#{\(level)}\\s.*$").anchorsMatchLineEndings(true),
-            styles: [[
-                .size(fontSize),
-                .color(level == 1 ? .systemBlue : .systemCyan),
-                .weight(level == 1 ? .bold : .semibold)
-            ]]
+            regex: try! Regex("^(#{\(level)}\\s{1,})[^\\s].*$").anchorsMatchLineEndings(true),
+            styles: [
+                [
+                    .size(fontSize),
+                    .color(NDSyntaxRegex.headingColors[level - 1]),
+                    .weight(NDSyntaxRegex.headingWeights[level - 1]),
+                    .font(.monospace),
+                    .underlineStyle(NDSyntaxRegex.headingUnderlines[level - 1]),
+                    .paragraphStyle(headingParagraphStyle)
+                ],
+                [
+                    .size(0.001)
+                ]
+            ]
         ))
     }
     

@@ -12,6 +12,12 @@
 		9309789429DDFE5700A77EA3 /* NDEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309789329DDFE5700A77EA3 /* NDEditorView.swift */; };
 		931CD4CE29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931CD4CD29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift */; };
 		933B10B029E485C900384996 /* NDSyntaxHighlightRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933B10AF29E485C900384996 /* NDSyntaxHighlightRule.swift */; };
+		933F57742A041A9700B02A99 /* MathJaxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 933F57732A041A9700B02A99 /* MathJaxSwift */; };
+		933F57762A041AC600B02A99 /* NDTextLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933F57752A041AC600B02A99 /* NDTextLink.swift */; };
+		933F57812A04584E00B02A99 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933F57802A04584E00B02A99 /* String+Extensions.swift */; };
+		933F57832A04607B00B02A99 /* NDPopovers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933F57822A04607B00B02A99 /* NDPopovers.swift */; };
+		933F57852A0461F000B02A99 /* NDLatex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933F57842A0461F000B02A99 /* NDLatex.swift */; };
+		9340D9E829FAF4E00034FE7B /* NSRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */; };
 		935FA5B729E0EA8600027EAF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789829DDFE5700A77EA3 /* Preview Assets.xcassets */; };
 		935FA5B829E0EA8800027EAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789529DDFE5700A77EA3 /* Assets.xcassets */; };
 		93E9D4B029DE878900A7E9F4 /* NDMarkdownEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E9D4AF29DE878900A7E9F4 /* NDMarkdownEditor.swift */; };
@@ -30,6 +36,11 @@
 		9309789B29DDFE5700A77EA3 /* Notedown.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notedown.entitlements; sourceTree = "<group>"; };
 		931CD4CD29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDMarkdownEditorConfiguration.swift; sourceTree = "<group>"; };
 		933B10AF29E485C900384996 /* NDSyntaxHighlightRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSyntaxHighlightRule.swift; sourceTree = "<group>"; };
+		933F57752A041AC600B02A99 /* NDTextLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDTextLink.swift; sourceTree = "<group>"; };
+		933F57802A04584E00B02A99 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		933F57822A04607B00B02A99 /* NDPopovers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDPopovers.swift; sourceTree = "<group>"; };
+		933F57842A0461F000B02A99 /* NDLatex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDLatex.swift; sourceTree = "<group>"; };
+		9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+Extensions.swift"; sourceTree = "<group>"; };
 		93E9D4AF29DE878900A7E9F4 /* NDMarkdownEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDMarkdownEditor.swift; sourceTree = "<group>"; };
 		93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDInputProcessing.swift; sourceTree = "<group>"; };
 		93FFBC7F29EF6EDF007F8750 /* NSTextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+Extensions.swift"; sourceTree = "<group>"; };
@@ -40,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				933F57742A041A9700B02A99 /* MathJaxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +89,11 @@
 				933B10AF29E485C900384996 /* NDSyntaxHighlightRule.swift */,
 				93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */,
 				93FFBC7F29EF6EDF007F8750 /* NSTextView+Extensions.swift */,
+				9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */,
+				933F57752A041AC600B02A99 /* NDTextLink.swift */,
+				933F57802A04584E00B02A99 /* String+Extensions.swift */,
+				933F57822A04607B00B02A99 /* NDPopovers.swift */,
+				933F57842A0461F000B02A99 /* NDLatex.swift */,
 			);
 			path = Notedown;
 			sourceTree = "<group>";
@@ -106,6 +123,7 @@
 			);
 			name = Notedown;
 			packageProductDependencies = (
+				933F57732A041A9700B02A99 /* MathJaxSwift */,
 			);
 			productName = Notedown;
 			productReference = 9309788C29DDFE5700A77EA3 /* Notedown.app */;
@@ -136,6 +154,7 @@
 			);
 			mainGroup = 9309788329DDFE5700A77EA3;
 			packageReferences = (
+				933F57722A041A9700B02A99 /* XCRemoteSwiftPackageReference "MathJaxSwift" */,
 			);
 			productRefGroup = 9309788D29DDFE5700A77EA3 /* Products */;
 			projectDirPath = "";
@@ -163,11 +182,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9340D9E829FAF4E00034FE7B /* NSRange+Extensions.swift in Sources */,
+				933F57812A04584E00B02A99 /* String+Extensions.swift in Sources */,
 				931CD4CE29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift in Sources */,
+				933F57852A0461F000B02A99 /* NDLatex.swift in Sources */,
 				933B10B029E485C900384996 /* NDSyntaxHighlightRule.swift in Sources */,
 				93FFBC8029EF6EDF007F8750 /* NSTextView+Extensions.swift in Sources */,
 				93FFBC7E29EF6B6E007F8750 /* NDInputProcessing.swift in Sources */,
 				9309789229DDFE5700A77EA3 /* NDDocument.swift in Sources */,
+				933F57832A04607B00B02A99 /* NDPopovers.swift in Sources */,
+				933F57762A041AC600B02A99 /* NDTextLink.swift in Sources */,
 				93E9D4B029DE878900A7E9F4 /* NDMarkdownEditor.swift in Sources */,
 				9309789029DDFE5700A77EA3 /* NDApp.swift in Sources */,
 				9309789429DDFE5700A77EA3 /* NDEditorView.swift in Sources */,
@@ -372,6 +396,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		933F57722A041A9700B02A99 /* XCRemoteSwiftPackageReference "MathJaxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/colinc86/MathJaxSwift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		933F57732A041A9700B02A99 /* MathJaxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 933F57722A041A9700B02A99 /* XCRemoteSwiftPackageReference "MathJaxSwift" */;
+			productName = MathJaxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9309788429DDFE5700A77EA3 /* Project object */;
 }

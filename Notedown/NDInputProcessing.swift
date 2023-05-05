@@ -20,7 +20,7 @@ let processUnorderedList: NDInputProcessor = { textView, replacementRange, repla
     guard
         replacementString == "\n",
         let listMatch = lineString.firstMatch(of: Regex(NDSyntaxRegex.unorderedList)),
-        let bulletRange = listMatch[1].range
+        let bulletRange = listMatch[2].range
     else { return true }
         
     let bullet = lineString[bulletRange]
