@@ -218,6 +218,7 @@ extension NDMarkdownEditorView {
         }
         
         func displayLatex(_ textView: NDTextView, latex: String) {
+            let mousePosition = textView.mousePosition
             renderLatex(latex) { image in
                 let popover = NSPopover()
                 let popoverController = NDImagePopoverViewController()
@@ -226,7 +227,7 @@ extension NDMarkdownEditorView {
                 popover.behavior = .transient
                 popover.animates = true
                 popover.contentSize = image.size
-                popover.show(relativeTo: NSRect(x: textView.mousePosition.x, y: textView.mousePosition.y, width: 1, height: 1), of: textView, preferredEdge: .minY)
+                popover.show(relativeTo: NSRect(x: mousePosition.x, y: mousePosition.y, width: 1, height: 1), of: textView, preferredEdge: .minY)
             }
         }
     }

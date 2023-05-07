@@ -10,7 +10,8 @@ import WebKit
 
 class NDLatexRenderingContext: NSObject, WKNavigationDelegate {
     let latex: String
-    let webView = WKWebView()
+    static let webView = WKWebView()
+    static let mathJax = try? MathJax()
     
     /// For some reason, unless we wrap the SVG in an <img>, the rendering is blurry. Why? Who knows!
     private var svg = ""
@@ -51,15 +52,13 @@ class NDLatexRenderingContext: NSObject, WKNavigationDelegate {
         self.onReady = onReady
         super.init()
         
-        guard
-            let mathJax = try? MathJax(),
-            let svg = try? mathJax.tex2svg(latex)
-        else {
+        guard let svg = try? Self.mathJax?.tex2svg(latex) else {
             return
         }
+        
         self.svg = svg
-        webView.navigationDelegate = self
-        webView.loadHTMLString(htmlString, baseURL: nil)
+        Self.webView.navigationDelegate = self
+        Self.webView.loadHTMLString(htmlString, baseURL: nil)
         self.selfRef = self
     }
     
@@ -84,7 +83,7 @@ class NDLatexRenderingContext: NSObject, WKNavigationDelegate {
     }
     
     private func generateWebViewImage() {
-        webView.takeSnapshot(with: nil) { image, error in
+        Self.webView.takeSnapshot(with: nil) { image, error in
             if let image = image {
                 self.onReady(image)
             }
