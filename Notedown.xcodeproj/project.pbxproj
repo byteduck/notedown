@@ -17,6 +17,7 @@
 		933F57812A04584E00B02A99 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933F57802A04584E00B02A99 /* String+Extensions.swift */; };
 		933F57832A04607B00B02A99 /* NDPopovers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933F57822A04607B00B02A99 /* NDPopovers.swift */; };
 		933F57852A0461F000B02A99 /* NDLatex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933F57842A0461F000B02A99 /* NDLatex.swift */; };
+		934044FF2A0978A700442980 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 934044FE2A0978A700442980 /* Credits.rtf */; };
 		9340D9E829FAF4E00034FE7B /* NSRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */; };
 		935FA5B729E0EA8600027EAF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789829DDFE5700A77EA3 /* Preview Assets.xcassets */; };
 		935FA5B829E0EA8800027EAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789529DDFE5700A77EA3 /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 		933F57802A04584E00B02A99 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		933F57822A04607B00B02A99 /* NDPopovers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDPopovers.swift; sourceTree = "<group>"; };
 		933F57842A0461F000B02A99 /* NDLatex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDLatex.swift; sourceTree = "<group>"; };
+		934044FE2A0978A700442980 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+Extensions.swift"; sourceTree = "<group>"; };
 		93E9D4AF29DE878900A7E9F4 /* NDMarkdownEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDMarkdownEditor.swift; sourceTree = "<group>"; };
 		93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDInputProcessing.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 		9309788329DDFE5700A77EA3 = {
 			isa = PBXGroup;
 			children = (
+				934044FE2A0978A700442980 /* Credits.rtf */,
 				9309788E29DDFE5700A77EA3 /* Notedown */,
 				9309788D29DDFE5700A77EA3 /* Products */,
 			);
@@ -171,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				935FA5B829E0EA8800027EAF /* Assets.xcassets in Resources */,
+				934044FF2A0978A700442980 /* Credits.rtf in Resources */,
 				935FA5B729E0EA8600027EAF /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
