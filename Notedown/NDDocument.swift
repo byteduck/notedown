@@ -76,7 +76,7 @@ class NDDocument: ReferenceFileDocument {
         fileWrappers[NDDocument.INFO] = FileWrapper(regularFileWithContents: try JSONEncoder().encode(notebook.config))
         
         // Write dirty markdown files
-        for i in notebook.pages.indices {
+        for i in notebook.pages.indices.filter({ self.notebook.pages[$0].dirty }) {
             DispatchQueue.main.async {
                 self.notebook.pages[i].dirty = false
             }
@@ -85,7 +85,7 @@ class NDDocument: ReferenceFileDocument {
         }
         
         // Write dirty images
-        for i in notebook.images.indices {
+        for i in notebook.images.indices.filter({ self.notebook.images[$0].dirty }) {
             DispatchQueue.main.async {
                 self.notebook.images[i].dirty = false
             }
