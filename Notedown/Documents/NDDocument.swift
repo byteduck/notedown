@@ -1,5 +1,5 @@
 //
-//  NotedownDocument.swift
+//  NDDocument.swift
 //  Notedown
 //
 //  Created by Aaron on 4/5/23.

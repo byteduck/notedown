@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  NDNotebookView.swift
 //  Notedown
 //
 //  Created by Aaron on 4/5/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NDEditorView: View {
+struct NDNotebookView: View {
     /// The document that this view represents
     @ObservedObject var document: NDDocument
     /// The editor configuration for this view
@@ -56,7 +56,7 @@ struct NDEditorView: View {
                 let pageName = Binding<String>($selectedPage)?.wrappedValue,
                 let page = $document.notebook.pages.first(where: { $0.wrappedValue.fileName == pageName })
             {
-                NDMarkdownEditorView(page: page, document: document, configuration: configuration)
+                NDEditorView(page: page, document: document, configuration: configuration)
                     .id(selectedPage)
                     .edgesIgnoringSafeArea(.top)
             } else {
@@ -103,7 +103,7 @@ struct NDEditorView: View {
     }
 }
 
-extension NDEditorView {
+extension NDNotebookView {
     struct NewPageView: View {
         @ObservedObject var document: NDDocument
         @Binding var pageName: String

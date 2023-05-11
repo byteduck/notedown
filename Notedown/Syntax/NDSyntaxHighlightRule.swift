@@ -1,5 +1,5 @@
 //
-//  NDMarkdownEditor+Syntax.swift
+//  NDSyntaxHighlightRule.swift
 //  Notedown
 //
 //  Created by Aaron on 4/10/23.
@@ -185,16 +185,7 @@ let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
                 [.size(0.001)]
             ],
             action: { document, storage, paragraphRange, paragraphString, match in
-                guard let latex = match[2].substring else {
-                    return
-                }
-                
-//                let eyeAttachment = NSTextAttachment()
-//                eyeAttachment.image = NSImage(systemSymbolName: "eye.fill", accessibilityDescription: nil)
-//                let eyeString = NSMutableAttributedString(attachment: eyeAttachment)
-//                eyeString.addAttribute(.link, value: NDTextLink.latex(String(latex)), range: NSRange(location: 0, length: eyeString.length))
-//
-//                storage.insert(eyeString, at: match.range.relativeTo(paragraphRange, in: paragraphString).upperBound + 1)
+                guard let latex = match[2].substring else { return }
                 storage.addAttributes([
                     .link: NDTextLink.latex(String(latex))
                 ], range: match[2].range!.relativeTo(paragraphRange, in: paragraphString))

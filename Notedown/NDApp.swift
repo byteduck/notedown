@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct NDApp: App {
+    @Environment(\.openDocument) var openDocument
+    
     var body: some Scene {
         DocumentGroup(newDocument: { NDDocument() }) { file in
-            NDEditorView(
+            NDNotebookView(
                 document: file.document,
                 configuration: .constant(NDMarkdownEditorConfiguration()),
                 selectedPage: file.$document.notebook.config.openPage

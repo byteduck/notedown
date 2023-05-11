@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9309789029DDFE5700A77EA3 /* NDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309788F29DDFE5700A77EA3 /* NDApp.swift */; };
 		9309789229DDFE5700A77EA3 /* NDDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309789129DDFE5700A77EA3 /* NDDocument.swift */; };
-		9309789429DDFE5700A77EA3 /* NDEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309789329DDFE5700A77EA3 /* NDEditorView.swift */; };
+		9309789429DDFE5700A77EA3 /* NDNotebookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309789329DDFE5700A77EA3 /* NDNotebookView.swift */; };
 		931CD4CE29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931CD4CD29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift */; };
 		933B10B029E485C900384996 /* NDSyntaxHighlightRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933B10AF29E485C900384996 /* NDSyntaxHighlightRule.swift */; };
 		933F57742A041A9700B02A99 /* MathJaxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 933F57732A041A9700B02A99 /* MathJaxSwift */; };
@@ -19,9 +19,11 @@
 		933F57852A0461F000B02A99 /* NDLatex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933F57842A0461F000B02A99 /* NDLatex.swift */; };
 		934044FF2A0978A700442980 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 934044FE2A0978A700442980 /* Credits.rtf */; };
 		9340D9E829FAF4E00034FE7B /* NSRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */; };
+		935179422A0D9AC200EBDE3B /* NDEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179412A0D9AC200EBDE3B /* NDEditorView.swift */; };
+		935179442A0D9BAD00EBDE3B /* NDEditorCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179432A0D9BAD00EBDE3B /* NDEditorCoordinator.swift */; };
 		935FA5B729E0EA8600027EAF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789829DDFE5700A77EA3 /* Preview Assets.xcassets */; };
 		935FA5B829E0EA8800027EAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789529DDFE5700A77EA3 /* Assets.xcassets */; };
-		93E9D4B029DE878900A7E9F4 /* NDMarkdownEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E9D4AF29DE878900A7E9F4 /* NDMarkdownEditor.swift */; };
+		93E9D4B029DE878900A7E9F4 /* NDTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E9D4AF29DE878900A7E9F4 /* NDTextView.swift */; };
 		93FFBC7E29EF6B6E007F8750 /* NDInputProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */; };
 		93FFBC8029EF6EDF007F8750 /* NSTextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFBC7F29EF6EDF007F8750 /* NSTextView+Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -30,7 +32,7 @@
 		9309788C29DDFE5700A77EA3 /* Notedown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notedown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9309788F29DDFE5700A77EA3 /* NDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDApp.swift; sourceTree = "<group>"; };
 		9309789129DDFE5700A77EA3 /* NDDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDDocument.swift; sourceTree = "<group>"; };
-		9309789329DDFE5700A77EA3 /* NDEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDEditorView.swift; sourceTree = "<group>"; };
+		9309789329DDFE5700A77EA3 /* NDNotebookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDNotebookView.swift; sourceTree = "<group>"; };
 		9309789529DDFE5700A77EA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Notedown/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		9309789829DDFE5700A77EA3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9309789A29DDFE5700A77EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -43,7 +45,9 @@
 		933F57842A0461F000B02A99 /* NDLatex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDLatex.swift; sourceTree = "<group>"; };
 		934044FE2A0978A700442980 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+Extensions.swift"; sourceTree = "<group>"; };
-		93E9D4AF29DE878900A7E9F4 /* NDMarkdownEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDMarkdownEditor.swift; sourceTree = "<group>"; };
+		935179412A0D9AC200EBDE3B /* NDEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDEditorView.swift; sourceTree = "<group>"; };
+		935179432A0D9BAD00EBDE3B /* NDEditorCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDEditorCoordinator.swift; sourceTree = "<group>"; };
+		93E9D4AF29DE878900A7E9F4 /* NDTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDTextView.swift; sourceTree = "<group>"; };
 		93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDInputProcessing.swift; sourceTree = "<group>"; };
 		93FFBC7F29EF6EDF007F8750 /* NSTextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,23 +84,15 @@
 		9309788E29DDFE5700A77EA3 /* Notedown */ = {
 			isa = PBXGroup;
 			children = (
+				935179402A0D9A5800EBDE3B /* Extensions */,
+				9351793E2A0D9A1500EBDE3B /* Documents */,
+				9351793D2A0D9A0100EBDE3B /* Syntax */,
+				9351793C2A0D99FC00EBDE3B /* Views */,
 				9309788F29DDFE5700A77EA3 /* NDApp.swift */,
-				9309789129DDFE5700A77EA3 /* NDDocument.swift */,
-				9309789329DDFE5700A77EA3 /* NDEditorView.swift */,
 				9309789529DDFE5700A77EA3 /* Assets.xcassets */,
 				9309789A29DDFE5700A77EA3 /* Info.plist */,
 				9309789B29DDFE5700A77EA3 /* Notedown.entitlements */,
 				9309789729DDFE5700A77EA3 /* Preview Content */,
-				93E9D4AF29DE878900A7E9F4 /* NDMarkdownEditor.swift */,
-				931CD4CD29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift */,
-				933B10AF29E485C900384996 /* NDSyntaxHighlightRule.swift */,
-				93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */,
-				93FFBC7F29EF6EDF007F8750 /* NSTextView+Extensions.swift */,
-				9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */,
-				933F57752A041AC600B02A99 /* NDTextLink.swift */,
-				933F57802A04584E00B02A99 /* String+Extensions.swift */,
-				933F57822A04607B00B02A99 /* NDPopovers.swift */,
-				933F57842A0461F000B02A99 /* NDLatex.swift */,
 			);
 			path = Notedown;
 			sourceTree = "<group>";
@@ -107,6 +103,48 @@
 				9309789829DDFE5700A77EA3 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9351793C2A0D99FC00EBDE3B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9309789329DDFE5700A77EA3 /* NDNotebookView.swift */,
+				93E9D4AF29DE878900A7E9F4 /* NDTextView.swift */,
+				933F57822A04607B00B02A99 /* NDPopovers.swift */,
+				935179412A0D9AC200EBDE3B /* NDEditorView.swift */,
+				935179432A0D9BAD00EBDE3B /* NDEditorCoordinator.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9351793D2A0D9A0100EBDE3B /* Syntax */ = {
+			isa = PBXGroup;
+			children = (
+				931CD4CD29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift */,
+				933B10AF29E485C900384996 /* NDSyntaxHighlightRule.swift */,
+				93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */,
+				933F57752A041AC600B02A99 /* NDTextLink.swift */,
+				933F57842A0461F000B02A99 /* NDLatex.swift */,
+			);
+			path = Syntax;
+			sourceTree = "<group>";
+		};
+		9351793E2A0D9A1500EBDE3B /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				9309789129DDFE5700A77EA3 /* NDDocument.swift */,
+			);
+			path = Documents;
+			sourceTree = "<group>";
+		};
+		935179402A0D9A5800EBDE3B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				93FFBC7F29EF6EDF007F8750 /* NSTextView+Extensions.swift */,
+				9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */,
+				933F57802A04584E00B02A99 /* String+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,9 +234,11 @@
 				9309789229DDFE5700A77EA3 /* NDDocument.swift in Sources */,
 				933F57832A04607B00B02A99 /* NDPopovers.swift in Sources */,
 				933F57762A041AC600B02A99 /* NDTextLink.swift in Sources */,
-				93E9D4B029DE878900A7E9F4 /* NDMarkdownEditor.swift in Sources */,
+				93E9D4B029DE878900A7E9F4 /* NDTextView.swift in Sources */,
 				9309789029DDFE5700A77EA3 /* NDApp.swift in Sources */,
-				9309789429DDFE5700A77EA3 /* NDEditorView.swift in Sources */,
+				9309789429DDFE5700A77EA3 /* NDNotebookView.swift in Sources */,
+				935179442A0D9BAD00EBDE3B /* NDEditorCoordinator.swift in Sources */,
+				935179422A0D9AC200EBDE3B /* NDEditorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
