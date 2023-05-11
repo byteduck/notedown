@@ -13,6 +13,18 @@ class NDTextView: NSTextView {
     weak var document: NDDocument?
     var mousePosition: NSPoint = .zero
     
+    func setup() {
+        guard let scrollView = enclosingScrollView else {
+            fatalError()
+        }
+        scrollView.contentView.postsBoundsChangedNotifications = true
+        NotificationCenter.default
+            .addObserver(self,
+                         selector: #selector(scrollViewDidResize(_:)),
+                         name: NSView.boundsDidChangeNotification,
+                         object: scrollView.contentView)
+    }
+    
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         let ret = super.performDragOperation(sender)
         
@@ -45,6 +57,23 @@ class NDTextView: NSTextView {
     override func mouseMoved(with event: NSEvent) {
         self.mousePosition = self.convert(event.locationInWindow, from: nil)
         super.mouseMoved(with: event)
+    }
+    
+    /// Overscroll Behavior
+    
+    private var overscrollY: CGFloat = 0
+    
+    @objc func scrollViewDidResize(_ notification: Notification) {
+        guard let clipView = notification.object as? NSClipView else {
+            return
+        }
+        let offset = clipView.bounds.height / 4
+        textContainerInset = NSSize(width: 0, height: offset)
+        overscrollY = offset
+    }
+    
+    override var textContainerOrigin: NSPoint {
+        return super.textContainerOrigin.applying(.init(translationX: 0, y: -overscrollY))
     }
 }
 

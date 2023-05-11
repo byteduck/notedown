@@ -23,6 +23,7 @@ struct NDEditorView: NSViewRepresentable {
         textView.delegate = context.coordinator
         textView.string = page.contents
         textView.allowsUndo = true
+        textView.setup()
         
         updateConfiguration(context: context)
         
