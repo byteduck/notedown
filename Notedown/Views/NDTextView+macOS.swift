@@ -72,6 +72,15 @@ class NDTextView: NSTextView {
         let offset = clipView.bounds.height / 4
         textContainerInset = NSSize(width: 0, height: offset)
         overscrollY = offset
+        
+        // Ensure we pre-calculate the layout for the whole document so that scrolling is buttery smooth.
+        // This also fixes a weird bug where the scrollbar can freak out the first time we scroll.
+        if
+            let layoutManager = textLayoutManager,
+            let documentRange = layoutManager.textContentManager?.documentRange
+        {
+            layoutManager.ensureLayout(for: documentRange)
+        }
     }
     
     override var textContainerOrigin: NSPoint {

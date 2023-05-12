@@ -57,11 +57,12 @@ struct NDEditorView: UIViewRepresentable {
     @Binding var page: NDDocument.Page
     var document: NDDocument
     var configuration: NDMarkdownEditorConfiguration
-    let textView = UITextView()
+    let textView = NDTextView()
     
     func makeUIView(context: Context) -> UITextView {
         textView.delegate = context.coordinator
         textView.text = page.contents
+        textView.setup()
         
         updateConfiguration(context: context)
         
@@ -79,7 +80,10 @@ struct NDEditorView: UIViewRepresentable {
     func updateConfiguration(context: Context) {
         textView.font = configuration.defaultFont
         textView.textColor = configuration.defaultColor
-        applyHighlighting(inRange: NSRange(location: 0, length: textView.string.count), withStorage: textView.textStorage, configuration: configuration, document: document)
+        
+        // Create new NSTextStorage. Things seem to work better this way
+        let range = NSRange(location: 0, length: textView.string.count)
+        applyHighlighting(inRange: range, withStorage: textView.textStorage, configuration: configuration, document: document)
     }
 }
 
