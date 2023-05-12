@@ -24,11 +24,10 @@ struct NDNotebookView: View {
     @Environment(\.undoManager) var undoManager
 
     var body: some View {
-        
         NavigationSplitView {
             // List of pages
             List($document.notebook.pages, selection: $selectedPage) { page in
-                NavigationLink(value: page.wrappedValue) {
+                NavigationLink(value: page.wrappedValue.fileName) {
                     VStack(alignment: .leading) {
                         Text(page.wrappedValue.title)
                         Text(page.wrappedValue.fileName)
@@ -41,7 +40,9 @@ struct NDNotebookView: View {
                     }
                 }
             }
+            .navigationTitle("Notebook")
             
+            #if os(macOS)
             // New page button
             Button("+", action: {
                 newPageName = ""
@@ -51,6 +52,7 @@ struct NDNotebookView: View {
             .padding(6)
             .frame(maxWidth: .infinity, alignment: .trailing)
             .font(.title)
+            #endif
         } detail: {
             if
                 let pageName = Binding<String>($selectedPage)?.wrappedValue,
@@ -59,6 +61,11 @@ struct NDNotebookView: View {
                 NDEditorView(page: page, document: document, configuration: configuration)
                     .id(selectedPage)
                     .edgesIgnoringSafeArea(.top)
+                    .navigationTitle(page.wrappedValue.title)
+                #if os(iOS)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbarRole(.browser)
+                #endif
             } else {
                 Text("Select a page")
             }

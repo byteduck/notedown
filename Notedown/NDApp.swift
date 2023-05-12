@@ -16,6 +16,9 @@ struct NDApp: App {
                 configuration: .constant(NDMarkdownEditorConfiguration()),
                 selectedPage: file.$document.notebook.config.openPage
             )
+            #if os(iOS)
+            .toolbar(.hidden, for: .navigationBar)
+            #endif
         }
         .commands {
             CommandGroup(before: .textEditing) {
