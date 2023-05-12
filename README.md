@@ -1,6 +1,6 @@
 # Notedown
 
-A (very work-in-progress) SwiftUI and Cocoa-based Markdown editor for notes. It aims to provide a hybrid experience that brings together the speed of raw Markdown and LaTeX editing with the comforts of WYSIWYG editors.
+A (very work-in-progress) SwiftUI, AppKit, and UIKit-based Markdown editor that runs on macOS and iPadOS. It aims to provide a hybrid experience that brings together the speed of raw Markdown and LaTeX editing with the comforts of WYSIWYG editors.
 
 ![Notedown Screenshot](screenshots/2023-05-08.png)
 
@@ -13,4 +13,3 @@ By unifying the markdown editor and preview into a sort of "hybrid" interface, N
 It's in its very early stages at the moment, but some of the future goals include:
 - Better syntax autocomplete
 - More customizability (font, syntax highlighting, etc)
-- iPadOS / iOS port

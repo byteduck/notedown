@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+
+#if os(macOS)
 import AppKit
 
 struct NDEditorView: NSViewRepresentable {
@@ -42,6 +44,43 @@ struct NDEditorView: NSViewRepresentable {
         let textView = scrollView.documentView as! NSTextView
         textView.font = configuration.defaultFont
         textView.textColor = configuration.defaultColor
-        context.coordinator.applyHighlighting(inRange: NSRange(location: 0, length: textView.string.count), withStorage: textView.textStorage!)
+        applyHighlighting(inRange: NSRange(location: 0, length: textView.string.count), withStorage: textView.textStorage!, configuration: configuration, document: document)
     }
 }
+
+#elseif os(iOS)
+import UIKit
+
+struct NDEditorView: UIViewRepresentable {
+    typealias UIViewType = UITextView
+    
+    @Binding var page: NDDocument.Page
+    var document: NDDocument
+    var configuration: NDMarkdownEditorConfiguration
+    let textView = UITextView()
+    
+    func makeUIView(context: Context) -> UITextView {
+        textView.delegate = context.coordinator
+        textView.text = page.contents
+        
+        updateConfiguration(context: context)
+        
+        return textView
+    }
+    
+    func updateUIView(_ view: UIViewType, context: Context) {
+        updateConfiguration(context: context)
+    }
+    
+    func makeCoordinator() -> NDEditorCoordinator {
+        NDEditorCoordinator(self)
+    }
+    
+    func updateConfiguration(context: Context) {
+        textView.font = configuration.defaultFont
+        textView.textColor = configuration.defaultColor
+        applyHighlighting(inRange: NSRange(location: 0, length: textView.string.count), withStorage: textView.textStorage, configuration: configuration, document: document)
+    }
+}
+
+#endif

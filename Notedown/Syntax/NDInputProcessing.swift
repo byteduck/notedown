@@ -5,9 +5,9 @@
 //  Created by Aaron on 4/18/23.
 //
 
-import AppKit
+import Foundation
 
-typealias NDInputProcessor = (_ textView: NSTextView, _ replacementRange: NSRange, _ replacementString: String, _ lineRange: Range<String.Index>, _ lineString: Substring) -> Bool
+typealias NDInputProcessor = (_ textView: NDPlatformTextView, _ replacementRange: NSRange, _ replacementString: String, _ lineRange: Range<String.Index>, _ lineString: Substring) -> Bool
 
 let markdownProcessors: [NDInputProcessor] = [
     processUnorderedList,

@@ -1,10 +1,11 @@
 //
-//  NDEditorCoordinator.swift
+//  NDEditorCoordinator+iOS.swift
 //  Notedown
 //
 //  Created by Aaron on 5/11/23.
 //
 
+#if os(macOS)
 import AppKit
 import SwiftUI
 
@@ -39,71 +40,13 @@ class NDEditorCoordinator: NSObject, NSTextViewDelegate {
         
         let paragraphRange = string.paragraphRange(for: editedRange)
         textStorage.beginEditing()
-        applyHighlighting(inRange: NSRange(paragraphRange, in: string), withStorage: textStorage)
+        applyHighlighting(inRange: NSRange(paragraphRange, in: string), withStorage: textStorage, configuration: parent.configuration, document: parent.document)
         textStorage.endEditing()
     }
     
     func textView(_ textView: NSTextView, shouldChangeTextIn affectedCharRange: NSRange, replacementString: String?) -> Bool {
         self.affectedCharRange = affectedCharRange
         return performSyntaxCompletion(textView: textView, inRange: affectedCharRange, replacementString: replacementString)
-    }
-    
-    func applyHighlighting(inRange paragraphRange: NSRange, withStorage textStorage: NSTextStorage) {
-        if paragraphRange.length == 0 {
-            return
-        }
-        
-        textStorage.setAttributes([
-            .font: parent.configuration.defaultFont,
-            .foregroundColor: parent.configuration.defaultColor
-        ], range: paragraphRange)
-        let string = textStorage.attributedSubstring(from: paragraphRange).string
-        
-        markdownSyntaxRules.forEach({ rule in
-            // TODO: Cache rule attributes so we don't have to calculate them on the fly every time
-            let ruleAttributes = rule.attributes(parent.configuration)
-            string.matches(of: rule.regex).forEach({ match in
-                for rangeIndex in match.indices {
-                    guard
-                        rangeIndex < rule.styles.count,
-                        let range = match[rangeIndex].range
-                    else {
-                        continue
-                    }
-                    
-                    let nsRange = NSRange(range, in: string)
-                    textStorage.addAttributes(ruleAttributes[rangeIndex], range: NSRange(location: nsRange.lowerBound + paragraphRange.lowerBound, length: nsRange.length))
-                }
-                
-                // Call custom action if we have one
-                if let action = rule.action {
-                    action(self.parent.document, textStorage, paragraphRange, string, match)
-                }
-            })
-        })
-    }
-    
-    func performSyntaxCompletion(textView: NSTextView, inRange range: NSRange, replacementString: String?) -> Bool {
-        let viewString = textView.string
-        
-        guard
-            let replacementString = replacementString,
-            let stringRange = Range(range, in: viewString)
-        else { return true }
-        
-        let lineRange = viewString.lineRange(for: stringRange)
-        let lineString = viewString[lineRange]
-        
-        textView.textStorage?.beginEditing()
-        defer { textView.textStorage?.endEditing() }
-        
-        for processor in markdownProcessors {
-            if !processor(textView, range, replacementString, lineRange, lineString) {
-                return false
-            }
-        }
-        
-        return true
     }
     
     func textView(_ textView: NSTextView, clickedOnLink link: Any, at charIndex: Int) -> Bool {
@@ -155,3 +98,5 @@ class NDEditorCoordinator: NSObject, NSTextViewDelegate {
         }
     }
 }
+
+#endif

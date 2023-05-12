@@ -5,7 +5,11 @@
 //  Created by Aaron on 4/10/23.
 //
 
+#if os(iOS)
+import UIKit
+#elseif os(macOS)
 import AppKit
+#endif
 
 enum NDFontType {
     case regular
@@ -14,13 +18,13 @@ enum NDFontType {
 }
 
 enum NDSyntaxFormat {
-    case color(NSColor)
+    case color(NDColor)
     case font(NDFontType)
-    case weight(NSFont.Weight)
+    case weight(NDFont.Weight)
     case italic
     case underlineStyle(NSUnderlineStyle)
     case size(CGFloat)
-    case background(NSColor)
+    case background(NDColor)
     case paragraphStyle(NSParagraphStyle)
 }
 
@@ -60,20 +64,36 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
             self[.font] = font(config).withSize(size)
         case .weight(let weight):
             let oldFont = font(config)
+            
+            #if os(macOS)
             let oldTraits = NSFontManager.shared.traits(of: oldFont)
             guard let fontFamily = oldFont.familyName else {
                 break
             }
             self[.font] = NSFontManager.shared.font(withFamily: fontFamily, traits: oldTraits, weight: weight.intWeight, size: oldFont.pointSize)
+            
+            #elseif os(iOS)
+            var traits = oldFont.traits
+            traits[.weight] = weight.intWeight
+            let descriptor = oldFont.fontDescriptor.addingAttributes([.traits: traits])
+            self[.font] = UIFont(descriptor: descriptor, size: oldFont.pointSize)
+            
+            #endif
         case .italic:
+            #if os(macOS)
             self[.font] = NSFontManager.shared.convert(font(config), toHaveTrait: .italicFontMask)
+            
+            #elseif os(iOS)
+            let oldFont = font(config)
+            let descriptor = oldFont.fontDescriptor.withSymbolicTraits([.traitItalic]) ?? oldFont.fontDescriptor
+            self[.font] = UIFont(descriptor: descriptor, size: oldFont.pointSize)
+            
+            #endif
         case .underlineStyle(let underlineStyle):
             self[.underlineStyle] = underlineStyle
         case .font(let style):
             let oldFont = font(config)
-            let oldWeight = NSFontManager.shared.weight(of: oldFont)
-            let oldTraits = NSFontManager.shared.traits(of: oldFont)
-            let newFont: NSFont
+            let newFont: NDFont
             switch(style) {
             case .regular:
                 newFont = config.defaultFont
@@ -82,21 +102,35 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
             case .serif:
                 newFont = config.defaultSerifFont
             }
+            
+            #if os(macOS)
             guard let newFontFamily = newFont.familyName else {
                 break
             }
+            let oldWeight = NSFontManager.shared.weight(of: oldFont)
+            let oldTraits = NSFontManager.shared.traits(of: oldFont)
             self[.font] = NSFontManager.shared.font(withFamily: newFontFamily, traits: oldTraits, weight: oldWeight, size: oldFont.pointSize)
+            
+            #elseif os(iOS)
+            let oldTraits = oldFont.traits
+            let descriptor = UIFontDescriptor(fontAttributes: [
+                .family: newFont.familyName,
+                .traits: oldTraits
+            ])
+            self[.font] = UIFont(descriptor: descriptor, size: oldFont.pointSize)
+            
+            #endif
         case .paragraphStyle(let paragraphStyle):
             self[.paragraphStyle] = paragraphStyle
         }
     }
     
-    private func font(_ config: NDMarkdownEditorConfiguration) -> NSFont {
-        self[.font] as? NSFont ?? config.defaultFont
+    private func font(_ config: NDMarkdownEditorConfiguration) -> NDFont {
+        self[.font] as? NDFont ?? config.defaultFont
     }
 }
 
-extension NSFont.Weight {
+extension NDFont.Weight {
     // The float representation ranges from -1.0 to 1.0, where 0.0 is regular.
     // The int representation that NSFontManager expects ranges from 0 to 15, where 5 is regular.
     var intWeight: Int {
@@ -121,8 +155,8 @@ struct NDSyntaxRegex {
     static let htmlTag = /<([a-zA-Z]+)(\s+[a-zA-Z]+\s*=\s*("([^"]*)"|'([^'])'))*\s*\/>/
     static let inlineCode = /(\`)((?:[^\\\`\n]|\\.){1,})(\`)/.repetitionBehavior(.reluctant)
     static let maxHeadingLevel = 6
-    static let headingColors: [NSColor] = [.systemBlue, .systemCyan, .textColor, .textColor, .textColor, .textColor]
-    static let headingWeights: [NSFont.Weight] = [.heavy, .bold, .semibold, .semibold, .semibold, .semibold]
+    static let headingColors: [NDColor] = [.systemBlue, .systemCyan, .textColor, .textColor, .textColor, .textColor]
+    static let headingWeights: [NDFont.Weight] = [.heavy, .bold, .semibold, .semibold, .semibold, .semibold]
     static let headingUnderlines: [NSUnderlineStyle] = [[], [], .single, .single, .single, .single]
 }
 
@@ -241,7 +275,7 @@ let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
                 let imageRange = match[3].range!.relativeTo(paragraphRange, in: paragraphString)
                 storage.addAttributes([
                     .link: NDTextLink.image(String(imageName)),
-                    .foregroundColor: NSColor.systemRed
+                    .foregroundColor: NDColor.systemRed
                 ], range: imageRange)
             }
         )
@@ -259,7 +293,7 @@ let markdownSyntaxRules: [NDSyntaxHighlightRule] = {
     
     // Editor rules for markdown headers
     for level in 1...NDSyntaxRegex.maxHeadingLevel {
-        let fontSize = NSFont.systemFontSize + pow(1.8, Double(NDSyntaxRegex.maxHeadingLevel - level))
+        let fontSize = NDFont.systemFontSize + pow(1.8, Double(NDSyntaxRegex.maxHeadingLevel - level))
         rules.append(NDSyntaxHighlightRule(
             regex: try! Regex("^(#{\(level)}\\s{1,})[^\\s].*$").anchorsMatchLineEndings(true),
             styles: [

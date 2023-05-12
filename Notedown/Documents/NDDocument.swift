@@ -112,13 +112,13 @@ extension NDDocument {
 
     struct NDImage {
         let fileName: String
-        let image: NSImage
+        let image: NDPlatformImage
         let data: Data
         var dirty: Bool = false
         
         init(fileName: String, data: Data) {
             self.fileName = fileName
-            self.image = NSImage(data: data) ?? NSImage()
+            self.image = NDPlatformImage(data: data) ?? NDPlatformImage()
             self.data = data
         }
     }

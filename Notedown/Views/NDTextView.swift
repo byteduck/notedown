@@ -5,6 +5,8 @@
 //  Created by Aaron on 4/5/23.
 //
 
+#if os(macOS)
+
 import Foundation
 import AppKit
 import SwiftUI
@@ -77,4 +79,4 @@ class NDTextView: NSTextView {
     }
 }
 
-
+#endif

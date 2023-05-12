@@ -20,12 +20,19 @@
 		934044FF2A0978A700442980 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 934044FE2A0978A700442980 /* Credits.rtf */; };
 		9340D9E829FAF4E00034FE7B /* NSRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */; };
 		935179422A0D9AC200EBDE3B /* NDEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179412A0D9AC200EBDE3B /* NDEditorView.swift */; };
-		935179442A0D9BAD00EBDE3B /* NDEditorCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179432A0D9BAD00EBDE3B /* NDEditorCoordinator.swift */; };
+		935179442A0D9BAD00EBDE3B /* NDEditorCoordinator+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179432A0D9BAD00EBDE3B /* NDEditorCoordinator+macOS.swift */; };
+		935179492A0DCEF100EBDE3B /* NDPlatformTypealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179482A0DCEF100EBDE3B /* NDPlatformTypealias.swift */; };
+		9351794B2A0DD00200EBDE3B /* NDColorCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9351794A2A0DD00200EBDE3B /* NDColorCompat.swift */; };
+		9351794D2A0DD26A00EBDE3B /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9351794C2A0DD26A00EBDE3B /* UIFont+Extensions.swift */; };
+		9351794F2A0DD7B300EBDE3B /* NDTextViewCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9351794E2A0DD7B300EBDE3B /* NDTextViewCompat.swift */; };
+		935179542A0DE2C200EBDE3B /* NDEditorCoordinator+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179532A0DE2C200EBDE3B /* NDEditorCoordinator+iOS.swift */; };
+		935179562A0DE38B00EBDE3B /* NDSyntaxHighlighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179552A0DE38B00EBDE3B /* NDSyntaxHighlighting.swift */; };
+		935179582A0DE46600EBDE3B /* NDSyntaxCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179572A0DE46600EBDE3B /* NDSyntaxCompletion.swift */; };
 		935FA5B729E0EA8600027EAF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789829DDFE5700A77EA3 /* Preview Assets.xcassets */; };
 		935FA5B829E0EA8800027EAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789529DDFE5700A77EA3 /* Assets.xcassets */; };
 		93E9D4B029DE878900A7E9F4 /* NDTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E9D4AF29DE878900A7E9F4 /* NDTextView.swift */; };
 		93FFBC7E29EF6B6E007F8750 /* NDInputProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */; };
-		93FFBC8029EF6EDF007F8750 /* NSTextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFBC7F29EF6EDF007F8750 /* NSTextView+Extensions.swift */; };
+		93FFBC8029EF6EDF007F8750 /* TextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FFBC7F29EF6EDF007F8750 /* TextView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,10 +53,17 @@
 		934044FE2A0978A700442980 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+Extensions.swift"; sourceTree = "<group>"; };
 		935179412A0D9AC200EBDE3B /* NDEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDEditorView.swift; sourceTree = "<group>"; };
-		935179432A0D9BAD00EBDE3B /* NDEditorCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDEditorCoordinator.swift; sourceTree = "<group>"; };
+		935179432A0D9BAD00EBDE3B /* NDEditorCoordinator+macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NDEditorCoordinator+macOS.swift"; sourceTree = "<group>"; };
+		935179482A0DCEF100EBDE3B /* NDPlatformTypealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDPlatformTypealias.swift; sourceTree = "<group>"; };
+		9351794A2A0DD00200EBDE3B /* NDColorCompat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDColorCompat.swift; sourceTree = "<group>"; };
+		9351794C2A0DD26A00EBDE3B /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		9351794E2A0DD7B300EBDE3B /* NDTextViewCompat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDTextViewCompat.swift; sourceTree = "<group>"; };
+		935179532A0DE2C200EBDE3B /* NDEditorCoordinator+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NDEditorCoordinator+iOS.swift"; sourceTree = "<group>"; };
+		935179552A0DE38B00EBDE3B /* NDSyntaxHighlighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSyntaxHighlighting.swift; sourceTree = "<group>"; };
+		935179572A0DE46600EBDE3B /* NDSyntaxCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSyntaxCompletion.swift; sourceTree = "<group>"; };
 		93E9D4AF29DE878900A7E9F4 /* NDTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDTextView.swift; sourceTree = "<group>"; };
 		93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDInputProcessing.swift; sourceTree = "<group>"; };
-		93FFBC7F29EF6EDF007F8750 /* NSTextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+Extensions.swift"; sourceTree = "<group>"; };
+		93FFBC7F29EF6EDF007F8750 /* TextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +98,7 @@
 		9309788E29DDFE5700A77EA3 /* Notedown */ = {
 			isa = PBXGroup;
 			children = (
+				935179472A0DCEE700EBDE3B /* Platform */,
 				935179402A0D9A5800EBDE3B /* Extensions */,
 				9351793E2A0D9A1500EBDE3B /* Documents */,
 				9351793D2A0D9A0100EBDE3B /* Syntax */,
@@ -112,7 +127,8 @@
 				93E9D4AF29DE878900A7E9F4 /* NDTextView.swift */,
 				933F57822A04607B00B02A99 /* NDPopovers.swift */,
 				935179412A0D9AC200EBDE3B /* NDEditorView.swift */,
-				935179432A0D9BAD00EBDE3B /* NDEditorCoordinator.swift */,
+				935179532A0DE2C200EBDE3B /* NDEditorCoordinator+iOS.swift */,
+				935179432A0D9BAD00EBDE3B /* NDEditorCoordinator+macOS.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -125,6 +141,8 @@
 				93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */,
 				933F57752A041AC600B02A99 /* NDTextLink.swift */,
 				933F57842A0461F000B02A99 /* NDLatex.swift */,
+				935179552A0DE38B00EBDE3B /* NDSyntaxHighlighting.swift */,
+				935179572A0DE46600EBDE3B /* NDSyntaxCompletion.swift */,
 			);
 			path = Syntax;
 			sourceTree = "<group>";
@@ -140,11 +158,22 @@
 		935179402A0D9A5800EBDE3B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				93FFBC7F29EF6EDF007F8750 /* NSTextView+Extensions.swift */,
+				93FFBC7F29EF6EDF007F8750 /* TextView+Extensions.swift */,
 				9340D9E729FAF4E00034FE7B /* NSRange+Extensions.swift */,
 				933F57802A04584E00B02A99 /* String+Extensions.swift */,
+				9351794C2A0DD26A00EBDE3B /* UIFont+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		935179472A0DCEE700EBDE3B /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				935179482A0DCEF100EBDE3B /* NDPlatformTypealias.swift */,
+				9351794A2A0DD00200EBDE3B /* NDColorCompat.swift */,
+				9351794E2A0DD7B300EBDE3B /* NDTextViewCompat.swift */,
+			);
+			path = Platform;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,7 +207,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					9309788B29DDFE5700A77EA3 = {
 						CreatedOnToolsVersion = 14.2;
@@ -226,18 +255,25 @@
 			files = (
 				9340D9E829FAF4E00034FE7B /* NSRange+Extensions.swift in Sources */,
 				933F57812A04584E00B02A99 /* String+Extensions.swift in Sources */,
+				935179582A0DE46600EBDE3B /* NDSyntaxCompletion.swift in Sources */,
 				931CD4CE29E5E55600ED6C11 /* NDMarkdownEditorConfiguration.swift in Sources */,
 				933F57852A0461F000B02A99 /* NDLatex.swift in Sources */,
+				935179492A0DCEF100EBDE3B /* NDPlatformTypealias.swift in Sources */,
+				9351794F2A0DD7B300EBDE3B /* NDTextViewCompat.swift in Sources */,
 				933B10B029E485C900384996 /* NDSyntaxHighlightRule.swift in Sources */,
-				93FFBC8029EF6EDF007F8750 /* NSTextView+Extensions.swift in Sources */,
+				93FFBC8029EF6EDF007F8750 /* TextView+Extensions.swift in Sources */,
 				93FFBC7E29EF6B6E007F8750 /* NDInputProcessing.swift in Sources */,
 				9309789229DDFE5700A77EA3 /* NDDocument.swift in Sources */,
 				933F57832A04607B00B02A99 /* NDPopovers.swift in Sources */,
 				933F57762A041AC600B02A99 /* NDTextLink.swift in Sources */,
 				93E9D4B029DE878900A7E9F4 /* NDTextView.swift in Sources */,
+				935179542A0DE2C200EBDE3B /* NDEditorCoordinator+iOS.swift in Sources */,
 				9309789029DDFE5700A77EA3 /* NDApp.swift in Sources */,
+				935179562A0DE38B00EBDE3B /* NDSyntaxHighlighting.swift in Sources */,
 				9309789429DDFE5700A77EA3 /* NDNotebookView.swift in Sources */,
-				935179442A0D9BAD00EBDE3B /* NDEditorCoordinator.swift in Sources */,
+				935179442A0D9BAD00EBDE3B /* NDEditorCoordinator+macOS.swift in Sources */,
+				9351794B2A0DD00200EBDE3B /* NDColorCompat.swift in Sources */,
+				9351794D2A0DD26A00EBDE3B /* UIFont+Extensions.swift in Sources */,
 				935179422A0D9AC200EBDE3B /* NDEditorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +314,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -338,6 +375,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -369,22 +407,31 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Notedown/Preview Content\"";
 				DEVELOPMENT_TEAM = F9595A9E2N;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Notedown/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.byteduck.Notedown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -399,22 +446,31 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Notedown/Preview Content\"";
 				DEVELOPMENT_TEAM = F9595A9E2N;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Notedown/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.byteduck.Notedown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

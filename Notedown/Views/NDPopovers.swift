@@ -5,6 +5,7 @@
 //  Created by Aaron on 5/4/23.
 //
 
+#if os(macOS)
 import AppKit
 
 class NDImagePopoverViewController: NSViewController {
@@ -18,3 +19,4 @@ class NDImagePopoverViewController: NSViewController {
         }
     }
 }
+#endif

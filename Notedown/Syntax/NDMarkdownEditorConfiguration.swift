@@ -5,11 +5,9 @@
 //  Created by Aaron on 4/11/23.
 //
 
-import AppKit
-
 struct NDMarkdownEditorConfiguration {
-    var defaultFont: NSFont = .systemFont(ofSize: NSFont.systemFontSize, weight: .regular)
-    var defaultMonospaceFont: NSFont = .monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)
-    var defaultSerifFont: NSFont = .init(name: "Times New Roman", size: NSFont.systemFontSize) ?? .systemFont(ofSize: NSFont.systemFontSize)
-    var defaultColor: NSColor = .textColor
+    var defaultFont: NDFont = .systemFont(ofSize: NDFont.systemFontSize, weight: .regular)
+    var defaultMonospaceFont: NDFont = .monospacedSystemFont(ofSize: NDFont.systemFontSize, weight: .regular)
+    var defaultSerifFont: NDFont = .init(name: "Times New Roman", size: NDFont.systemFontSize) ?? .systemFont(ofSize: NDFont.systemFontSize)
+    var defaultColor: NDColor = .textColor
 }

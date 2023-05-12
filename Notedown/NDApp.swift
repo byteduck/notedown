@@ -9,8 +9,6 @@ import SwiftUI
 
 @main
 struct NDApp: App {
-    @Environment(\.openDocument) var openDocument
-    
     var body: some Scene {
         DocumentGroup(newDocument: { NDDocument() }) { file in
             NDNotebookView(

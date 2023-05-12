@@ -42,12 +42,12 @@ class NDLatexRenderingContext: NSObject, WKNavigationDelegate {
         """
     }
     
-    private let onReady: (NSImage) -> Void
+    private let onReady: (NDPlatformImage) -> Void
     
     // Maintain a strong reference to ourself to stay allocated until we're done
     private var selfRef: NDLatexRenderingContext?
     
-    init(latex: String, onReady: @escaping (NSImage) -> Void) {
+    init(latex: String, onReady: @escaping (NDPlatformImage) -> Void) {
         self.latex = latex
         self.onReady = onReady
         super.init()
@@ -75,8 +75,11 @@ class NDLatexRenderingContext: NSObject, WKNavigationDelegate {
                     self.selfRef = nil
                     return
                 }
-                
+                #if os(macOS)
                 webView.setFrameSize(NSSize(width: width, height: height))
+                #elseif os(iOS)
+                webView.frame.size = CGSize(width: width, height: height)
+                #endif
                 self.generateWebViewImage()
             }
         }
@@ -92,6 +95,6 @@ class NDLatexRenderingContext: NSObject, WKNavigationDelegate {
     }
 }
 
-func renderLatex(_ latex: String, onReady: @escaping (NSImage) -> Void) {
+func renderLatex(_ latex: String, onReady: @escaping (NDPlatformImage) -> Void) {
     _ = NDLatexRenderingContext(latex: latex, onReady: onReady)
 }
