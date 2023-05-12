@@ -29,7 +29,7 @@ enum NDSyntaxFormat {
 }
 
 struct NDSyntaxHighlightRule {
-    typealias SyntaxHighlightAction = (NDDocument, NSTextStorage, NSRange, String, Regex<AnyRegexOutput>.Match) -> Void
+    typealias SyntaxHighlightAction = (NDDocument?, NSTextStorage, NSRange, String, Regex<AnyRegexOutput>.Match) -> Void
     
     /// The `Regex` to match for this syntax highlighting rule.
     let regex: Regex<AnyRegexOutput>

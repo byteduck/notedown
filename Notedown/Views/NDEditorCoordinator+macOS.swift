@@ -68,7 +68,7 @@ class NDEditorCoordinator: NSObject, NSTextViewDelegate {
     }
     
     func displayImageLink(_ textView: NDTextView, imageName: String) {
-        guard let image = parent.document.notebook.images.first(where: { $0.fileName == imageName }) else {
+        guard let image = parent.document?.notebook.images.first(where: { $0.fileName == imageName }) else {
             return
         }
         

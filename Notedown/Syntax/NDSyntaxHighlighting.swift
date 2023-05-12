@@ -12,7 +12,7 @@ import AppKit
 import UIKit
 #endif
 
-func applyHighlighting(inRange paragraphRange: NSRange, withStorage textStorage: NSTextStorage, configuration: NDMarkdownEditorConfiguration, document: NDDocument) {
+func applyHighlighting(inRange paragraphRange: NSRange, withStorage textStorage: NSTextStorage, configuration: NDMarkdownEditorConfiguration, document: NDDocument?) {
     if paragraphRange.length == 0 {
         return
     }

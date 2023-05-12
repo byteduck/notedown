@@ -29,6 +29,7 @@
 		935179582A0DE46600EBDE3B /* NDSyntaxCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179572A0DE46600EBDE3B /* NDSyntaxCompletion.swift */; };
 		9351795B2A0DE92E00EBDE3B /* MathJaxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9351795A2A0DE92E00EBDE3B /* MathJaxSwift */; };
 		9351795F2A0E1E5A00EBDE3B /* NDTextView+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9351795E2A0E1E5A00EBDE3B /* NDTextView+iOS.swift */; };
+		935179612A0E3BEE00EBDE3B /* NDMarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935179602A0E3BEE00EBDE3B /* NDMarkdownDocument.swift */; };
 		935FA5B729E0EA8600027EAF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789829DDFE5700A77EA3 /* Preview Assets.xcassets */; };
 		935FA5B829E0EA8800027EAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309789529DDFE5700A77EA3 /* Assets.xcassets */; };
 		93E9D4B029DE878900A7E9F4 /* NDTextView+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E9D4AF29DE878900A7E9F4 /* NDTextView+macOS.swift */; };
@@ -64,6 +65,7 @@
 		935179572A0DE46600EBDE3B /* NDSyntaxCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSyntaxCompletion.swift; sourceTree = "<group>"; };
 		9351795C2A0DF2A800EBDE3B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		9351795E2A0E1E5A00EBDE3B /* NDTextView+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NDTextView+iOS.swift"; sourceTree = "<group>"; };
+		935179602A0E3BEE00EBDE3B /* NDMarkdownDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDMarkdownDocument.swift; sourceTree = "<group>"; };
 		93E9D4AF29DE878900A7E9F4 /* NDTextView+macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NDTextView+macOS.swift"; sourceTree = "<group>"; };
 		93FFBC7D29EF6B6E007F8750 /* NDInputProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDInputProcessing.swift; sourceTree = "<group>"; };
 		93FFBC7F29EF6EDF007F8750 /* TextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView+Extensions.swift"; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				9309789129DDFE5700A77EA3 /* NDDocument.swift */,
+				935179602A0E3BEE00EBDE3B /* NDMarkdownDocument.swift */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				933F57852A0461F000B02A99 /* NDLatex.swift in Sources */,
 				935179492A0DCEF100EBDE3B /* NDPlatformTypealias.swift in Sources */,
 				9351794F2A0DD7B300EBDE3B /* NDTextViewCompat.swift in Sources */,
+				935179612A0E3BEE00EBDE3B /* NDMarkdownDocument.swift in Sources */,
 				9351795F2A0E1E5A00EBDE3B /* NDTextView+iOS.swift in Sources */,
 				933B10B029E485C900384996 /* NDSyntaxHighlightRule.swift in Sources */,
 				93FFBC8029EF6EDF007F8750 /* TextView+Extensions.swift in Sources */,
@@ -423,10 +427,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Notedown/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -464,10 +470,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Notedown/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

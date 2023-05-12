@@ -25,5 +25,10 @@ struct NDApp: App {
                 Button("TEST") {}
             }
         }
+        
+        DocumentGroup(newDocument: NDMarkdownDocument()) { file in
+            NDEditorView(page: file.$document.page, configuration: NDMarkdownEditorConfiguration())
+                .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }

@@ -15,7 +15,7 @@ struct NDEditorView: NSViewRepresentable {
     typealias NSViewType = NSScrollView
     
     @Binding var page: NDDocument.Page
-    var document: NDDocument
+    var document: NDDocument?
     var configuration: NDMarkdownEditorConfiguration
     let scrollView = NDTextView.scrollableTextView()
     
@@ -55,7 +55,7 @@ struct NDEditorView: UIViewRepresentable {
     typealias UIViewType = UITextView
     
     @Binding var page: NDDocument.Page
-    var document: NDDocument
+    var document: NDDocument?
     var configuration: NDMarkdownEditorConfiguration
     let textView = NDTextView()
     
