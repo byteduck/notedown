@@ -35,24 +35,31 @@ struct NDNotebookView: View {
                             .foregroundColor(.secondary)
                     }
                 }.contextMenu {
-                    Button("Delete") {
+                    Button(role: .destructive, action: {
                         deletePage = (true, page)
-                    }
+                    }, label: {
+                        Text("Delete")
+                    })
+                }.swipeActions {
+                    // We don't want the destructive role since we open a confirmation dialog afterwards, and adding the destructive role causes a delete animation to play immediately
+                    Button(role: .none, action: {
+                        deletePage = (true, page)
+                    }, label: {
+                        Text("Delete")
+                    }).tint(.red)
                 }
             }
-            .navigationTitle("Notebook")
-            
-            #if os(macOS)
-            // New page button
-            Button("+", action: {
-                newPageName = ""
-                presentingNewPageAlert = true
-            })
-            .buttonStyle(.borderless)
-            .padding(6)
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .font(.title)
-            #endif
+            .navigationTitle(document.name)
+            .toolbar {
+                ToolbarItem {
+                    Button(action: {
+                        newPageName = ""
+                        presentingNewPageAlert = true
+                    }, label: {
+                        Image(systemName: "plus")
+                    })
+                }
+            }
         } detail: {
             if
                 let pageName = Binding<String>($selectedPage)?.wrappedValue,
@@ -78,13 +85,17 @@ struct NDNotebookView: View {
         
         // Page deletion confirmation alert
         .alert("Delete page?", isPresented: $deletePage.0, actions: {
-            Button("Delete") {
+            Button(role: .cancel, action: {
+                deletePage = (false, nil)
+            }, label: {
+                Text("Cancel")
+            })
+            Button(role: .destructive, action: {
                 deletePage(document.notebook.pages.firstIndex(where: { $0 == deletePage.1?.wrappedValue }))
                 deletePage = (false, nil)
-            }
-            Button("Cancel") {
-                deletePage = (false, nil)
-            }
+            }, label: {
+                Text("Delete")
+            })
         }, message: {
             Text("Are you sure you'd like to delete the page \"\(deletePage.1?.wrappedValue.fileName ?? "nil")\"?")
         })
@@ -110,51 +121,52 @@ struct NDNotebookView: View {
     }
 }
 
-extension NDNotebookView {
-    struct NewPageView: View {
-        @ObservedObject var document: NDDocument
-        @Binding var pageName: String
-        @Binding var selectedPage: String?
-        var undoManager: UndoManager?
-        
-        @Environment(\.dismiss) var dismiss
-        
-        var fileName: String { "\(pageName).md" }
-        
-        var body: some View {
-            VStack {
-                Text("New Page")
-                    .font(.headline)
-                TextField(text: $pageName, prompt: Text("Title")) {
-                    Text("Title")
-                }
-                HStack {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .keyboardShortcut(.cancelAction)
-                    
-                    Button("Create") {
-                        createPage()
-                        dismiss()
-                    }
-                    .keyboardShortcut(.defaultAction)
-                }
+struct NewPageView: View {
+    @ObservedObject var document: NDDocument
+    @Binding var pageName: String
+    @Binding var selectedPage: String?
+    var undoManager: UndoManager?
+    
+    @Environment(\.dismiss) var dismiss
+    
+    var fileName: String { "\(pageName).md" }
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("New Page")
+                .font(.headline)
+
+            TextField(text: $pageName, prompt: Text("Title")) {
+                Text("Title")
             }
-            .padding(10)
-            .frame(minWidth: 200, alignment: .top)
+            .textFieldStyle(.roundedBorder)
+
+            HStack {
+                Button("Cancel") {
+                    dismiss()
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .keyboardShortcut(.cancelAction)
+
+                Button("Create") {
+                    createPage()
+                    dismiss()
+                }
+                .keyboardShortcut(.defaultAction)
+            }
         }
-        
-        func createPage() {
-            document.notebook.pages.append(NDDocument.Page(
-                contents: "# \(pageName)",
-                fileName: fileName
-            ))
-            selectedPage = fileName
-            undoManager?.registerUndo(withTarget: document) { document in
-                document.notebook.pages.removeAll(where: { $0.fileName == fileName })
-            }
+        .padding(10)
+        .frame(minWidth: 300)
+    }
+    
+    func createPage() {
+        document.notebook.pages.append(NDDocument.Page(
+            contents: "# \(pageName)",
+            fileName: fileName
+        ))
+        selectedPage = fileName
+        undoManager?.registerUndo(withTarget: document) { document in
+            document.notebook.pages.removeAll(where: { $0.fileName == fileName })
         }
     }
 }

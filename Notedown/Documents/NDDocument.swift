@@ -18,9 +18,11 @@ class NDDocument: ReferenceFileDocument {
     static let INFO = "info.json"
     
     @Published var notebook: Notebook
+    @Published var name: String
 
     init() {
         self.notebook = Notebook(config: Config(version: 1))
+        self.name = ""
     }
 
     static var readableContentTypes: [UTType] { [.noteBundle] }
@@ -36,6 +38,8 @@ class NDDocument: ReferenceFileDocument {
             throw CocoaError(.fileReadCorruptFile)
         }
         self.notebook = Notebook(config: info)
+        let filename = configuration.file.filename ?? "Notebook"
+        self.name = String(filename[filename.startIndex..<(filename.lastIndex(of: Character(".")) ?? filename.endIndex)])
         
         // Then, read in the pages
         for documentFile in fileWrappers.filter({ $0.key.hasSuffix(".md") }) {
