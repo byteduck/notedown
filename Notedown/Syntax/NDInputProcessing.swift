@@ -33,19 +33,22 @@ let processUnorderedList: NDInputProcessor = { textView, replacementRange, repla
         // If the line is just an indented bullet with nothing after it, just decrease the indentation
         if restOfLine.firstIndex(where: { !$0.isWhitespace }) == nil {
             textView.replaceWithUndo(in: NSRange(lineRange.lowerBound...lineRange.lowerBound, in: textView.string), with: "")
+            #if os(iOS)
+            textView.selectedRange = NSRange(location: textView.selectedRange.location - 1, length: 0)
+            #endif
             return false
         }
     }
     
     // If the line is just a bullet with nothing else, then we should remove the bullet
     if restOfLine.firstIndex(where: { !$0.isWhitespace }) == nil {
-        textView.replaceWithUndo(in: NSRange(lineRange, in: textView.string), with: "")
+        textView.replaceWithUndo(in: NSRange(lineRange, in: textView.string), with: "", moveCursor: true)
         return false
     }
     
-    textView.replaceWithUndo(in: replacementRange, with: "\(indentation)\(bullet) ")
+    textView.replaceWithUndo(in: replacementRange, with: "\n\(indentation)\(bullet) ", moveCursor: true)
     
-    return true
+    return false
 }
 
 /// Ordered list completion
@@ -61,9 +64,10 @@ let processOrderedList: NDInputProcessor = { textView, replacementRange, replace
     if let indentationRange = lineString.firstMatch(of: NDSyntaxRegex.whitespace)?.range {
         indentation = String(lineString[indentationRange])
     }
-    textView.replaceWithUndo(in: replacementRange, with: "\(indentation)\(number + 1). ")
     
-    return true
+    textView.replaceWithUndo(in: replacementRange, with: "\n\(indentation)\(number + 1). ", moveCursor: true)
+    
+    return false
 }
 
 /// List indentation (tab) completion
@@ -73,6 +77,6 @@ let processListIndentation: NDInputProcessor = { textView, replacementRange, rep
         (lineString.starts(with: NDSyntaxRegex.orderedList) || lineString.starts(with: NDSyntaxRegex.unorderedList))
     else { return true }
     
-    textView.replaceWithUndo(in: NSRange(lineRange.lowerBound..<lineRange.lowerBound, in: textView.string), with: "\t")
+    textView.insertWithUndo(atIndex: lineRange.lowerBound, string: "\t")
     return false
 }

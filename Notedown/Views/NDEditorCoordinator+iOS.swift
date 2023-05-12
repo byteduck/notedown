@@ -39,10 +39,8 @@ class NDEditorCoordinator: NSObject, UITextViewDelegate {
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard let affectedCharRange = affectedCharRange else {
-            return true
-        }
-        return performSyntaxCompletion(textView: textView, inRange: affectedCharRange, replacementString: text)
+        self.affectedCharRange = range
+        return performSyntaxCompletion(textView: textView, inRange: range, replacementString: text)
     }
     
 //    func textView(_ textView: UITextView, clickedOnLink link: Any, at charIndex: Int) -> Bool {
